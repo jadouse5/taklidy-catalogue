@@ -60,21 +60,27 @@
     background-image:radial-gradient(circle at 50% 30%, var(--wine-2) 0, var(--wine) 66%);
     color:var(--paper); display:flex; flex-direction:column; align-items:center;
     justify-content:center; text-align:center; }
-  .cover .c-frame { position:absolute; inset:6%; border:1.5px solid var(--gold-deep); }
-  .cover .logo { height:15%; margin:4% 0 16px; filter:drop-shadow(0 3px 7px rgba(0,0,0,.45)); }
-  .cover .c-word { font-family:var(--display); font-weight:700; letter-spacing:.28em;
-    font-size:clamp(28px,6vw,60px); color:var(--gold-2); margin:0 0 0 .28em; }
-  .cover .c-tag { font-family:var(--script); font-size:clamp(18px,3.4vw,30px); color:var(--gold-2); margin-top:8px; }
-  .cover .cyear { position:absolute; top:9%; font-family:var(--display); font-size:11px;
-    letter-spacing:.34em; color:#d8c19a; }
-  .cover .c-cap { position:absolute; bottom:9%; font-family:var(--display); font-size:10px;
-    letter-spacing:.26em; text-transform:uppercase; color:#d8c19a; }
+  .c-frame { position:absolute; inset:6%; border:1.5px solid var(--gold-deep); pointer-events:none; }
+  .cover .c-center { position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);
+    text-align:center; padding:0 8%; }
+  .cover .c-word { font-family:var(--display); font-weight:700; letter-spacing:.3em;
+    font-size:clamp(30px,6vw,58px); color:var(--gold-2); margin:0 0 0 .3em;
+    text-shadow:0 2px 4px rgba(0,0,0,.4); }
+  .cover .c-tag { font-family:var(--script); font-size:clamp(20px,3.6vw,32px);
+    color:var(--gold-2); margin-top:10px; }
+  .cover .cyear { position:absolute; top:11%; left:0; right:0; text-align:center;
+    font-family:var(--display); font-size:11px; letter-spacing:.34em; color:#d8c19a; }
+  .cover .c-cap { position:absolute; bottom:11%; left:0; right:0; text-align:center;
+    font-family:var(--display); font-size:10px; letter-spacing:.26em;
+    text-transform:uppercase; color:#d8c19a; }
   .logo { display:block; object-fit:contain; }
 
-  .back .logo { height:16%; }
-  .back .b-word { font-family:var(--display); letter-spacing:.3em; color:var(--gold-2);
-    font-size:clamp(20px,4vw,34px); margin:10px 0 6px .3em; }
-  .back .b-tag { font-family:var(--display); font-size:10px; letter-spacing:.26em;
+  .back { position:relative; }
+  .back .b-word { position:absolute; top:50%; left:0; right:0; transform:translateY(-50%);
+    text-align:center; font-family:var(--display); letter-spacing:.3em; color:var(--gold-2);
+    font-size:clamp(20px,4vw,34px); margin-left:.3em; }
+  .back .b-tag { position:absolute; bottom:11%; left:0; right:0; text-align:center;
+    font-family:var(--display); font-size:10px; letter-spacing:.26em;
     text-transform:uppercase; color:#d8c19a; }
 
   .fore { align-items:center; justify-content:center; text-align:center; }
@@ -158,9 +164,10 @@
 <div class="page hard cover" data-density="hard">
   <div class="c-frame"></div>
   <div class="cyear">CATALOGUE · MMXXVI</div>
-  <img class="logo" src="logo.png" alt="Taklidy monogram">
-  <h1 class="c-word">TAKLIDY</h1>
-  <div class="c-tag">Crafted in Fes</div>
+  <div class="c-center">
+    <h1 class="c-word">TAKLIDY</h1>
+    <div class="c-tag">Crafted in Fes</div>
+  </div>
   <div class="c-cap">91 pieces · 8 collections · Fine Silver-Plate</div>
 </div>
 <div class="page leaf fore">
@@ -1247,7 +1254,7 @@
   <div class="l-foot">102</div>
 </div>
 <div class="page hard back" data-density="hard">
-  <img class="logo" src="logo.png" alt="Taklidy monogram">
+  <div class="c-frame"></div>
   <div class="b-word">TAKLIDY</div>
   <div class="b-tag">Crafted in Fes · MMXXVI</div>
 </div>
