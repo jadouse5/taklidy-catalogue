@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAKLIDY — Catalogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine:#5C0F1B; --wine-2:#7A1626; --gold:#C9A24B; --gold-2:#E7C778;
+    --gold-deep:#9A7327; --paper:#FFFFFF; --ink:#3A2A22; --muted:#8C7350; --line:#E6DAC4;
+    --serif:"Cormorant Garamond",Georgia,serif; --display:"Cinzel",Georgia,serif;
+    --script:"Pinyon Script",cursive;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { font-family:var(--serif); color:var(--ink);
+    background:radial-gradient(circle at 50% 30%, #2a141a 0, #140a0d 72%);
+    display:flex; flex-direction:column; overflow:hidden; }
+  body.lang-en .fr { display:none; }
+  body.lang-fr .en { display:none; }
+
+  header.bar { flex:0 0 auto; display:flex; align-items:center; gap:14px;
+    padding:10px 18px; color:var(--gold-2); }
+  .bar .brand { font-family:var(--display); letter-spacing:.34em; font-size:15px;
+    color:var(--gold-2); }
+  .bar .spacer { flex:1; }
+  .bar select { background:#23121a; color:var(--gold-2); border:1px solid var(--gold-deep);
+    border-radius:8px; padding:7px 12px; font-family:var(--serif); font-size:14px;
+    max-width:300px; cursor:pointer; }
+  .bar .lang { display:flex; border:1px solid var(--gold-deep); border-radius:8px; overflow:hidden; }
+  .bar .lang button { background:transparent; color:var(--gold-2); border:0; padding:7px 13px;
+    cursor:pointer; font-family:var(--display); font-size:12px; letter-spacing:.1em; }
+  .bar .lang button.on { background:var(--wine); }
+
+  #scene { flex:1 1 auto; min-height:0; display:flex; align-items:center;
+    justify-content:center; position:relative; }
+  #book { touch-action:none; }
+  .stf__parent { margin:0 auto; }
+
+  footer.ctl { flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    gap:18px; padding:12px; color:var(--gold-2); }
+  .ctl button.turn { width:48px; height:48px; border-radius:50%; cursor:pointer;
+    border:1px solid var(--gold-deep); background:#23121a; color:var(--gold-2);
+    font-size:20px; transition:background .2s,transform .15s; }
+  .ctl button.turn:hover { background:var(--wine); transform:scale(1.07); }
+  .ctl .count { font-family:var(--display); letter-spacing:.16em; font-size:13px; min-width:90px;
+    text-align:center; }
+
+  /* ---- leaf shared ---- */
+  .page { background:var(--paper); overflow:hidden; }
+  .leaf { padding:9% 9% 7%; display:flex; flex-direction:column;
+    box-shadow:inset 0 0 0 1px #f0e7d6; }
+  /* page edge shading toward the spine for book realism */
+  .stf__item .leaf { position:relative; }
+
+  .hard { background:var(--wine);
+    background-image:radial-gradient(circle at 50% 30%, var(--wine-2) 0, var(--wine) 66%);
+    color:var(--paper); display:flex; flex-direction:column; align-items:center;
+    justify-content:center; text-align:center; }
+  .cover .c-frame { position:absolute; inset:6%; border:1.5px solid var(--gold-deep); }
+  .cover .logo { height:15%; margin:4% 0 16px; filter:drop-shadow(0 3px 7px rgba(0,0,0,.45)); }
+  .cover .c-word { font-family:var(--display); font-weight:700; letter-spacing:.28em;
+    font-size:clamp(28px,6vw,60px); color:var(--gold-2); margin:0 0 0 .28em; }
+  .cover .c-tag { font-family:var(--script); font-size:clamp(18px,3.4vw,30px); color:var(--gold-2); margin-top:8px; }
+  .cover .cyear { position:absolute; top:9%; font-family:var(--display); font-size:11px;
+    letter-spacing:.34em; color:#d8c19a; }
+  .cover .c-cap { position:absolute; bottom:9%; font-family:var(--display); font-size:10px;
+    letter-spacing:.26em; text-transform:uppercase; color:#d8c19a; }
+  .logo { display:block; object-fit:contain; }
+
+  .back .logo { height:16%; }
+  .back .b-word { font-family:var(--display); letter-spacing:.3em; color:var(--gold-2);
+    font-size:clamp(20px,4vw,34px); margin:10px 0 6px .3em; }
+  .back .b-tag { font-family:var(--display); font-size:10px; letter-spacing:.26em;
+    text-transform:uppercase; color:#d8c19a; }
+
+  .fore { align-items:center; justify-content:center; text-align:center; }
+  .fore .logo { height:16%; margin-bottom:6px; }
+  .fore .f-word { font-family:var(--display); font-weight:700; letter-spacing:.3em;
+    color:var(--wine); font-size:clamp(22px,4vw,38px); margin:0 0 2px .3em; }
+  .fore .f-lead { font-family:var(--script); font-size:clamp(18px,3vw,26px); color:var(--gold-deep); margin:2px 0 14px; }
+  .fore .f-p { font-size:clamp(13px,1.6vw,16px); color:#4a382c; line-height:1.65; margin:0 0 12px; }
+  .fore .f-sign { font-family:var(--script); font-size:22px; color:var(--wine); margin-top:6px; }
+
+  .toc { }
+  .toc-h { font-family:var(--display); font-weight:600; letter-spacing:.14em; color:var(--wine);
+    font-size:clamp(20px,3.4vw,28px); text-align:center; margin:2% 0 1%; }
+  .toc-sub { text-align:center; font-style:italic; color:var(--muted); margin-bottom:6%; font-size:13px; }
+  .toc ol { list-style:none; margin:0; padding:0; }
+  .toc li { display:flex; align-items:baseline; gap:8px; padding:9px 0; border-bottom:1px solid var(--line); }
+  .toc .t-n { font-family:var(--display); font-size:clamp(12px,1.5vw,15px); color:var(--wine); white-space:nowrap; }
+  .toc .t-d { flex:1; border-bottom:1.4px dotted #cdbf9f; transform:translateY(-3px); }
+  .toc .t-c { font-style:italic; color:var(--muted); font-size:12px; }
+  .toc .t-p { font-family:var(--display); color:var(--gold-deep); font-size:14px; min-width:26px; text-align:right; }
+
+  .divider { background:var(--wine);
+    background-image:radial-gradient(circle at 50% 32%, var(--wine-2) 0, var(--wine) 66%);
+    color:var(--paper); align-items:center; justify-content:center; text-align:center;
+    box-shadow:none; }
+  .divider .dv-num { font-family:var(--display); font-size:clamp(40px,9vw,68px); color:var(--gold-deep); opacity:.6; line-height:1; }
+  .divider .dv-kicker { font-family:var(--display); letter-spacing:.4em; font-size:11px; text-transform:uppercase; color:#d8c19a; margin-top:6px; }
+  .divider .dv-title { font-family:var(--display); font-weight:600; font-size:clamp(20px,4vw,30px); color:var(--gold-2); letter-spacing:.05em; margin:10px 0 0; }
+  .divider .dv-blurb { max-width:80%; font-style:italic; color:#ecdcba; line-height:1.6; margin:10px auto 0; font-size:clamp(12px,1.6vw,15px); }
+  .divider .dv-count { margin-top:18px; font-family:var(--display); font-size:11px; letter-spacing:.24em;
+    text-transform:uppercase; color:#d8c19a; border:1px solid var(--gold-deep); border-radius:999px; padding:6px 16px; }
+  .dv-rule { display:flex; align-items:center; justify-content:center; gap:12px; margin:14px auto; max-width:200px; color:var(--gold); }
+  .dv-rule::before,.dv-rule::after { content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,var(--gold)); }
+  .dv-rule::after { background:linear-gradient(90deg,var(--gold),transparent); }
+
+  /* product leaf */
+  .leaf .l-rh { flex:0 0 auto; font-family:var(--display); font-size:9px; letter-spacing:.26em;
+    text-transform:uppercase; color:var(--gold-deep); text-align:center;
+    padding-bottom:7px; border-bottom:1px solid var(--line); }
+  .l-media { flex:1 1 56%; min-height:0; display:flex; align-items:center; justify-content:center; padding:5% 0; }
+  .lframe { margin:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+  .lframe img { max-width:100%; max-height:100%; object-fit:contain; border-radius:3px;
+    box-shadow:0 16px 36px -18px rgba(67,32,18,.5), 0 0 0 1px rgba(201,162,75,.25); }
+  .lgrid { width:100%; height:100%; display:grid; gap:3.5%; grid-auto-flow:dense;
+    grid-template-columns:repeat(var(--cols,2),1fr); grid-auto-rows:1fr; }
+  .lgrid img { width:100%; height:100%; object-fit:cover; border-radius:3px; background:#fbf8f2;
+    box-shadow:0 6px 14px -9px rgba(67,32,18,.45), 0 0 0 1px rgba(201,162,75,.28); }
+  .lgrid img.big { grid-column:span 2; grid-row:span 2; }
+  .l-body { flex:0 0 auto; text-align:center; }
+  .l-title { font-family:var(--display); font-weight:600; color:var(--wine);
+    font-size:clamp(16px,2.4vw,24px); line-height:1.12; margin:6px 0 0; }
+  .l-title .fr { font-family:var(--serif); font-style:italic; color:var(--muted); font-weight:500; }
+  .l-fl { color:var(--gold); font-size:12px; margin:7px 0; }
+  .l-desc { color:#4a382c; font-size:clamp(12px,1.5vw,14.5px); line-height:1.55; margin:0 auto; max-width:90%; }
+  .l-desc .fr { font-style:italic; color:var(--muted); }
+  .l-specs { display:flex; justify-content:center; flex-wrap:wrap; gap:6px 24px; margin-top:12px;
+    padding-top:10px; border-top:1px dashed var(--line); }
+  .l-specs .sp { display:flex; flex-direction:column; align-items:center; }
+  .l-specs b { font-family:var(--display); font-weight:500; font-size:8px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-deep); }
+  .l-specs i { font-style:normal; font-size:12.5px; color:var(--ink); margin-top:1px; }
+  .l-foot { flex:0 0 auto; text-align:center; padding-top:8px; font-family:var(--display);
+    font-size:11px; color:var(--gold-deep); }
+
+  #lb { position:fixed; inset:0; background:rgba(20,10,13,.95); display:none; align-items:center;
+    justify-content:center; z-index:200; cursor:zoom-out; padding:30px; }
+  #lb img { max-width:92vw; max-height:90vh; border-radius:6px; box-shadow:0 0 0 1px var(--gold-deep),0 30px 80px -20px #000; }
+</style>
+</head>
+<body class="lang-en">
+<header class="bar">
+  <span class="brand">TAKLIDY</span>
+  <span class="spacer"></span>
+  <select id="jump" title="Jump to page"><option value="0">Cover</option><option value="1">Foreword</option><option value="2">Contents</option><option value="3">— Trays &amp; Platters —</option><option value="4">&nbsp;&nbsp;Embossed Serving Tray</option><option value="5">&nbsp;&nbsp;Engraved Round Tray</option><option value="6">&nbsp;&nbsp;Footed Oval Platter</option><option value="7">&nbsp;&nbsp;Footed Round Plate</option><option value="8">&nbsp;&nbsp;Gold-Handled Round Tray</option><option value="9">&nbsp;&nbsp;Mirror Plateau</option><option value="10">&nbsp;&nbsp;Ornate Rectangular Tray</option><option value="11">&nbsp;&nbsp;Oval Mirror Plateau</option><option value="12">&nbsp;&nbsp;Oval Platter</option><option value="13">&nbsp;&nbsp;Oval Serving Platter</option><option value="14">&nbsp;&nbsp;Pierced Round Charger</option><option value="15">&nbsp;&nbsp;Rectangular Handled Tray</option><option value="16">&nbsp;&nbsp;Rectangular Serving Tray</option><option value="17">&nbsp;&nbsp;Rectangular Tray</option><option value="18">&nbsp;&nbsp;Rectangular Tray</option><option value="19">&nbsp;&nbsp;Rectangular Tray Pair</option><option value="20">&nbsp;&nbsp;Round Charger</option><option value="21">&nbsp;&nbsp;Round Charger Plate</option><option value="22">&nbsp;&nbsp;Round Handled Tray</option><option value="23">&nbsp;&nbsp;Round Plate</option><option value="24">&nbsp;&nbsp;Rounded Rectangular Tray</option><option value="25">&nbsp;&nbsp;Square Nesting Dishes</option><option value="26">— Bowls, Baskets &amp; Compotes —</option><option value="27">&nbsp;&nbsp;Beaded Footed Bowl</option><option value="28">&nbsp;&nbsp;Beaded Pedestal Bowl</option><option value="29">&nbsp;&nbsp;Deep Pedestal Bowl</option><option value="30">&nbsp;&nbsp;Footed Bowl</option><option value="31">&nbsp;&nbsp;Footed Centerpiece Bowl</option><option value="32">&nbsp;&nbsp;Footed Compote</option><option value="33">&nbsp;&nbsp;Footed Oval Server</option><option value="34">&nbsp;&nbsp;Footed Sherbet Cup</option><option value="35">&nbsp;&nbsp;Gold-Rim Footed Bowl</option><option value="36">&nbsp;&nbsp;Hammered Serving Bowl</option><option value="37">&nbsp;&nbsp;Handled Oval Bowl</option><option value="38">&nbsp;&nbsp;Lion-Handle Footed Bowl</option><option value="39">&nbsp;&nbsp;Octagonal Compote</option><option value="40">&nbsp;&nbsp;Pedestal Compote</option><option value="41">&nbsp;&nbsp;Pedestal Serving Bowl</option><option value="42">&nbsp;&nbsp;Pierced Bonbon Basket</option><option value="43">&nbsp;&nbsp;Pierced Bread Basket</option><option value="44">&nbsp;&nbsp;Pierced Compote</option><option value="45">&nbsp;&nbsp;Pierced Oval Basket</option><option value="46">&nbsp;&nbsp;Pierced Pedestal Compote</option><option value="47">&nbsp;&nbsp;Scalloped Footed Bowl</option><option value="48">— Covered Dishes &amp; Tureens —</option><option value="49">&nbsp;&nbsp;Conical Covered Jar</option><option value="50">&nbsp;&nbsp;Covered Entrée Dish</option><option value="51">&nbsp;&nbsp;Covered Soup Bowl</option><option value="52">&nbsp;&nbsp;Covered Vegetable Dish</option><option value="53">&nbsp;&nbsp;Footed Covered Jar</option><option value="54">&nbsp;&nbsp;Footed Covered Server</option><option value="55">&nbsp;&nbsp;Footed Dome Server</option><option value="56">&nbsp;&nbsp;Footed Soup Tureen</option><option value="57">&nbsp;&nbsp;Glass Bowl with Lid</option><option value="58">&nbsp;&nbsp;Gold-Handled Covered Dish</option><option value="59">&nbsp;&nbsp;Hammered Dome Cloche</option><option value="60">&nbsp;&nbsp;Lidded Spice Dishes</option><option value="61">&nbsp;&nbsp;Oval Covered Tureen</option><option value="62">— Tiered Stands —</option><option value="63">&nbsp;&nbsp;Pedestal Cake Stand</option><option value="64">&nbsp;&nbsp;Three-Tier Dessert Stand</option><option value="65">&nbsp;&nbsp;Two-Tier Octagon Stand</option><option value="66">&nbsp;&nbsp;Two-Tier Pierced Stand</option><option value="67">&nbsp;&nbsp;Two-Tier Serving Stand</option><option value="68">&nbsp;&nbsp;Two-Tier Stand</option><option value="69">— Tea &amp; Coffee Service —</option><option value="70">&nbsp;&nbsp;Classic Teapot</option><option value="71">&nbsp;&nbsp;Classic Teapot</option><option value="72">&nbsp;&nbsp;Covered Sugar Bowl</option><option value="73">&nbsp;&nbsp;Covered Sugar Bowl</option><option value="74">&nbsp;&nbsp;Cream &amp; Sugar Set</option><option value="75">&nbsp;&nbsp;Creamer</option><option value="76">&nbsp;&nbsp;Footed Goblet Set</option><option value="77">&nbsp;&nbsp;Petite Teapot &amp; Creamer</option><option value="78">&nbsp;&nbsp;Silver Coffee Pot</option><option value="79">&nbsp;&nbsp;Silver Pitcher</option><option value="80">&nbsp;&nbsp;Silver Teapot</option><option value="81">&nbsp;&nbsp;Tea &amp; Coffee Service</option><option value="82">— Wine &amp; Ice —</option><option value="83">&nbsp;&nbsp;Geometric Canister</option><option value="84">&nbsp;&nbsp;Hammered Tumbler Vase</option><option value="85">&nbsp;&nbsp;Ice Bucket</option><option value="86">&nbsp;&nbsp;Pierced Canister</option><option value="87">&nbsp;&nbsp;Pierced Footed Cooler</option><option value="88">&nbsp;&nbsp;Warmer Stand</option><option value="89">&nbsp;&nbsp;Wine Bottle Stand</option><option value="90">— Glassware —</option><option value="91">&nbsp;&nbsp;Glass Serving Tray</option><option value="92">&nbsp;&nbsp;Octagonal Glass Platter</option><option value="93">&nbsp;&nbsp;Octagonal Glass Tray</option><option value="94">&nbsp;&nbsp;Ribbed Glass Tray</option><option value="95">— The House —</option><option value="96">&nbsp;&nbsp;Embroidered Linen</option><option value="97">&nbsp;&nbsp;Embroidered Napkin</option><option value="98">&nbsp;&nbsp;Lace Napkin</option><option value="99">&nbsp;&nbsp;Napkin &amp; Ring</option><option value="100">&nbsp;&nbsp;Taklidy Linen</option><option value="101">&nbsp;&nbsp;Taklidy Pouch</option></select>
+  <div class="lang">
+    <button data-l="en" class="on">EN</button><button data-l="fr">FR</button>
+  </div>
+</header>
+
+<div id="scene"><div id="book">
+<div class="page hard cover" data-density="hard">
+  <div class="c-frame"></div>
+  <div class="cyear">CATALOGUE · MMXXVI</div>
+  <img class="logo" src="logo.png" alt="Taklidy monogram">
+  <h1 class="c-word">TAKLIDY</h1>
+  <div class="c-tag">Crafted in Fes</div>
+  <div class="c-cap">91 pieces · 8 collections · Fine Silver-Plate</div>
+</div>
+<div class="page leaf fore">
+  <img class="logo" src="logo.png" alt="Taklidy monogram">
+  <h1 class="f-word">TAKLIDY</h1>
+  <div class="f-lead"><span class="en">An invitation to the table</span><span class="fr">Une invitation à la table</span></div>
+  <p class="f-p en">Every piece in this collection is plated, chased and finished by hand
+    in the workshops of Fes — a craft passed between generations. What follows is a
+    record of the house's serveware.</p>
+  <p class="f-p fr">Chaque pièce de cette collection est argentée, ciselée et finie à la
+    main dans les ateliers de Fès — un savoir-faire transmis de génération en
+    génération. Voici le registre du service de la maison.</p>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <div class="f-sign">Taklidy</div>
+</div>
+<div class="page leaf toc">
+  <h1 class="toc-h"><span class="en">Contents</span><span class="fr">Sommaire</span></h1>
+  <div class="toc-sub">91 pieces · 8 collections</div>
+  <ol><li><span class="t-n">Trays &amp; Platters</span><span class="t-d"></span><span class="t-c">22</span><span class="t-p">4</span></li><li><span class="t-n">Bowls, Baskets &amp; Compotes</span><span class="t-d"></span><span class="t-c">21</span><span class="t-p">27</span></li><li><span class="t-n">Covered Dishes &amp; Tureens</span><span class="t-d"></span><span class="t-c">13</span><span class="t-p">49</span></li><li><span class="t-n">Tiered Stands</span><span class="t-d"></span><span class="t-c">6</span><span class="t-p">63</span></li><li><span class="t-n">Tea &amp; Coffee Service</span><span class="t-d"></span><span class="t-c">12</span><span class="t-p">70</span></li><li><span class="t-n">Wine &amp; Ice</span><span class="t-d"></span><span class="t-c">7</span><span class="t-p">83</span></li><li><span class="t-n">Glassware</span><span class="t-d"></span><span class="t-c">4</span><span class="t-p">91</span></li><li><span class="t-n">The House</span><span class="t-d"></span><span class="t-c">6</span><span class="t-p">96</span></li></ol>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">01</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Trays &amp; Platters</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Broad surfaces for the table — oval, oblong and round, edged with beading, scallops and engraved borders.</p>
+  <div class="dv-count">22 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/embossed-serving-tray-009.jpg" alt="Embossed Serving Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Embossed Serving Tray</span><span class="fr">Repoussé de service plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A embossed serving tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un repoussé de service plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">5</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/engraved-round-tray-012.jpg" alt="Engraved Round Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Engraved Round Tray</span><span class="fr">Gravé rond plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A engraved round tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un gravé rond plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">6</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-oval-platter-085.jpg" alt="Footed Oval Platter"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Oval Platter</span><span class="fr">Sur pied ovale plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed oval platter in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un sur pied ovale plat en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">7</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/footed-round-plate-084.jpg" alt="Footed Round Plate"><img class="" loading="lazy" src="images/footed-plate-086.jpg" alt="Footed Round Plate"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Round Plate</span><span class="fr">Sur pied rond assiette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed round plate in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un sur pied rond assiette en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">8</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/gold-handled-round-tray-042.jpg" alt="Gold-Handled Round Tray"><img class="" loading="lazy" src="images/gold-handled-dish-043.jpg" alt="Gold-Handled Round Tray"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Gold-Handled Round Tray</span><span class="fr">À anses dorées rond plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A gold-handled round tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un à anses dorées rond plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">9</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/mirror-plateau-048.jpg" alt="Mirror Plateau"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Mirror Plateau</span><span class="fr">Miroir plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A mirror plateau in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un miroir plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">10</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="big" loading="lazy" src="images/ornate-rectangular-tray-081.jpg" alt="Ornate Rectangular Tray"><img class="" loading="lazy" src="images/tray-corner-detail-082.jpg" alt="Ornate Rectangular Tray"><img class="" loading="lazy" src="images/tray-edge-detail-083.jpg" alt="Ornate Rectangular Tray"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Ornate Rectangular Tray</span><span class="fr">Ornementé rectangulaire plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A ornate rectangular tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un ornementé rectangulaire plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>3 photographs</i></div></div>
+  </div>
+  <div class="l-foot">11</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="big" loading="lazy" src="images/oval-mirror-plateau-050.jpg" alt="Oval Mirror Plateau"><img class="" loading="lazy" src="images/oval-mirror-plateau-051.jpg" alt="Oval Mirror Plateau"><img class="" loading="lazy" src="images/oval-mirror-plateau-052.jpg" alt="Oval Mirror Plateau"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Oval Mirror Plateau</span><span class="fr">Ovale miroir plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A oval mirror plateau in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un ovale miroir plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>3 photographs</i></div></div>
+  </div>
+  <div class="l-foot">12</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/oval-platter-078.jpg" alt="Oval Platter"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Oval Platter</span><span class="fr">Ovale plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A oval platter in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un ovale plat en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">13</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/oval-serving-platter-014.jpg" alt="Oval Serving Platter"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Oval Serving Platter</span><span class="fr">Ovale de service plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A oval serving platter in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un ovale de service plat en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">14</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-round-charger-049.jpg" alt="Pierced Round Charger"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Round Charger</span><span class="fr">Ajouré rond de présentation</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced round charger in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un ajouré rond de présentation en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">15</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/rectangular-handled-tray-008.jpg" alt="Rectangular Handled Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Rectangular Handled Tray</span><span class="fr">Rectangulaire à anses plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A rectangular handled tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rectangulaire à anses plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">16</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/rectangular-serving-tray-010.jpg" alt="Rectangular Serving Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Rectangular Serving Tray</span><span class="fr">Rectangulaire de service plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A rectangular serving tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rectangulaire de service plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">17</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/rectangular-tray-015.jpg" alt="Rectangular Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Rectangular Tray</span><span class="fr">Rectangulaire plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A rectangular tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rectangulaire plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">18</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/rectangular-tray-087.jpg" alt="Rectangular Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Rectangular Tray</span><span class="fr">Rectangulaire plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A rectangular tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rectangulaire plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">19</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/rectangular-tray-pair-016.jpg" alt="Rectangular Tray Pair"><img class="" loading="lazy" src="images/rectangular-tray-pair-017.jpg" alt="Rectangular Tray Pair"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Rectangular Tray Pair</span><span class="fr">Rectangulaire plateau paire</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A rectangular tray pair in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rectangulaire plateau paire en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">20</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/round-charger-079.jpg" alt="Round Charger"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Round Charger</span><span class="fr">Rond de présentation</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A round charger in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rond de présentation en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">21</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/round-charger-plate-011.jpg" alt="Round Charger Plate"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Round Charger Plate</span><span class="fr">Rond de présentation assiette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A round charger plate in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rond de présentation assiette en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">22</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/round-handled-tray-067.jpg" alt="Round Handled Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Round Handled Tray</span><span class="fr">Rond à anses plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A round handled tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rond à anses plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">23</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/round-plate-061.jpg" alt="Round Plate"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Round Plate</span><span class="fr">Rond assiette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A round plate in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un rond assiette en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">24</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/rounded-rectangular-tray-091.jpg" alt="Rounded Rectangular Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Rounded Rectangular Tray</span><span class="fr">Arrondi rectangulaire plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A rounded rectangular tray in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un arrondi rectangulaire plateau en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">25</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Trays &amp; Platters</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/square-nesting-dishes-013.jpg" alt="Square Nesting Dishes"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Square Nesting Dishes</span><span class="fr">Carré gigogne coupelles</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A square nesting dishes in fine silver-plate, hand-finished in the Taklidy workshops of Fes.</span><span class="fr">Un carré gigogne coupelles en métal argenté, fini à la main dans les ateliers Taklidy de Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">26</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">02</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Bowls, Baskets &amp; Compotes</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Deep bowls, pierced baskets and footed compotes, turned to hold and to be seen.</p>
+  <div class="dv-count">21 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/beaded-footed-bowl-058.jpg" alt="Beaded Footed Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Beaded Footed Bowl</span><span class="fr">Perlé sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A beaded footed bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — perlé sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">28</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/beaded-pedestal-bowl-047.jpg" alt="Beaded Pedestal Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Beaded Pedestal Bowl</span><span class="fr">Perlé sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A beaded pedestal bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — perlé sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">29</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/deep-pedestal-bowl-057.jpg" alt="Deep Pedestal Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Deep Pedestal Bowl</span><span class="fr">Profonde sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A deep pedestal bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — profonde sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">30</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-bowl-080.jpg" alt="Footed Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Bowl</span><span class="fr">Sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">31</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-centerpiece-bowl-055.jpg" alt="Footed Centerpiece Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Centerpiece Bowl</span><span class="fr">Sur pied surtout coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed centerpiece bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied surtout coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">32</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-compote-006.jpg" alt="Footed Compote"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Compote</span><span class="fr">Sur pied compotier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed compote in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied compotier — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">33</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/footed-oval-server-030.jpg" alt="Footed Oval Server"><img class="" loading="lazy" src="images/handled-footed-dish-031.jpg" alt="Footed Oval Server"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Oval Server</span><span class="fr">Sur pied ovale plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed oval server in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied ovale plat — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">34</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-sherbet-cup-045.jpg" alt="Footed Sherbet Cup"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Sherbet Cup</span><span class="fr">Sur pied à sorbet coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed sherbet cup in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied à sorbet coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">35</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/gold-rim-footed-bowl-075.jpg" alt="Gold-Rim Footed Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Gold-Rim Footed Bowl</span><span class="fr">À bord doré sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A gold-rim footed bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — à bord doré sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">36</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/hammered-serving-bowl-029.jpg" alt="Hammered Serving Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Hammered Serving Bowl</span><span class="fr">Martelé de service coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A hammered serving bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — martelé de service coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">37</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/handled-oval-bowl-007.jpg" alt="Handled Oval Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Handled Oval Bowl</span><span class="fr">À anses ovale coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A handled oval bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — à anses ovale coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">38</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/lion-handle-footed-bowl-056.jpg" alt="Lion-Handle Footed Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Lion-Handle Footed Bowl</span><span class="fr">À anses lion sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A lion-handle footed bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — à anses lion sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">39</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/octagonal-compote-053.jpg" alt="Octagonal Compote"><img class="" loading="lazy" src="images/octagonal-compote-054.jpg" alt="Octagonal Compote"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Octagonal Compote</span><span class="fr">Octogonal compotier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A octagonal compote in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — octogonal compotier — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">40</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pedestal-compote-022.jpg" alt="Pedestal Compote"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pedestal Compote</span><span class="fr">Sur pied compotier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pedestal compote in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied compotier — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">41</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pedestal-serving-bowl-046.jpg" alt="Pedestal Serving Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pedestal Serving Bowl</span><span class="fr">Sur pied de service coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pedestal serving bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — sur pied de service coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">42</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-bonbon-basket-020.jpg" alt="Pierced Bonbon Basket"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Bonbon Basket</span><span class="fr">Ajouré à bonbons corbeille</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced bonbon basket in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — ajouré à bonbons corbeille — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">43</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-bread-basket-021.jpg" alt="Pierced Bread Basket"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Bread Basket</span><span class="fr">Ajouré à pain corbeille</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced bread basket in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — ajouré à pain corbeille — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">44</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-compote-060.jpg" alt="Pierced Compote"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Compote</span><span class="fr">Ajouré compotier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced compote in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — ajouré compotier — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">45</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-oval-basket-019.jpg" alt="Pierced Oval Basket"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Oval Basket</span><span class="fr">Ajouré ovale corbeille</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced oval basket in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — ajouré ovale corbeille — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">46</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-pedestal-compote-059.jpg" alt="Pierced Pedestal Compote"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Pedestal Compote</span><span class="fr">Ajouré sur pied compotier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced pedestal compote in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — ajouré sur pied compotier — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">47</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Bowls, Baskets &amp; Compotes</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/scalloped-footed-bowl-003.jpg" alt="Scalloped Footed Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Scalloped Footed Bowl</span><span class="fr">Festonné sur pied coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A scalloped footed bowl in fine silver-plate, turned and chased by hand in Fes.</span><span class="fr">Une pièce — festonné sur pied coupe — en métal argenté, tournée et ciselée à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">48</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">03</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Covered Dishes &amp; Tureens</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Lidded service — tureens, domes and covered dishes that carry warmth to the table.</p>
+  <div class="dv-count">13 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/conical-covered-jar-032.jpg" alt="Conical Covered Jar"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Conical Covered Jar</span><span class="fr">Conique couvert bocal</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A conical covered jar with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un conique couvert bocal à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">50</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="big" loading="lazy" src="images/covered-entr-e-dish-034.jpg" alt="Covered Entrée Dish"><img class="" loading="lazy" src="images/covered-entr-e-dish-035.jpg" alt="Covered Entrée Dish"><img class="" loading="lazy" src="images/covered-entr-e-dish-036.jpg" alt="Covered Entrée Dish"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Covered Entrée Dish</span><span class="fr">Couvert d&#x27;entrée plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A covered entrée dish with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un couvert d&#x27;entrée plat à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>3 photographs</i></div></div>
+  </div>
+  <div class="l-foot">51</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/covered-soup-bowl-068.jpg" alt="Covered Soup Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Covered Soup Bowl</span><span class="fr">Couvert à soupe coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A covered soup bowl with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un couvert à soupe coupe à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">52</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/covered-vegetable-dish-066.jpg" alt="Covered Vegetable Dish"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Covered Vegetable Dish</span><span class="fr">Couvert à légumes plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A covered vegetable dish with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un couvert à légumes plat à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">53</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/footed-covered-jar-064.jpg" alt="Footed Covered Jar"><img class="" loading="lazy" src="images/tall-covered-jar-065.jpg" alt="Footed Covered Jar"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Covered Jar</span><span class="fr">Sur pied couvert bocal</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed covered jar with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un sur pied couvert bocal à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">54</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/footed-covered-server-073.jpg" alt="Footed Covered Server"><img class="" loading="lazy" src="images/footed-covered-server-074.jpg" alt="Footed Covered Server"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Covered Server</span><span class="fr">Sur pied couvert plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed covered server with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un sur pied couvert plat à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">55</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-dome-server-001.jpg" alt="Footed Dome Server"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Dome Server</span><span class="fr">Sur pied cloche plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed dome server with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un sur pied cloche plat à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">56</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-soup-tureen-028.jpg" alt="Footed Soup Tureen"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Soup Tureen</span><span class="fr">Sur pied à soupe soupière</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed soup tureen with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un sur pied à soupe soupière à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">57</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/glass-bowl-with-lid-069.jpg" alt="Glass Bowl with Lid"><img class="" loading="lazy" src="images/covered-glass-dish-070.jpg" alt="Glass Bowl with Lid"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Glass Bowl with Lid</span><span class="fr">Verre coupe with Lid</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A glass bowl with lid with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un verre coupe with lid à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">58</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/gold-handled-covered-dish-044.jpg" alt="Gold-Handled Covered Dish"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Gold-Handled Covered Dish</span><span class="fr">À anses dorées couvert plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A gold-handled covered dish with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un à anses dorées couvert plat à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">59</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/hammered-dome-cloche-018.jpg" alt="Hammered Dome Cloche"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Hammered Dome Cloche</span><span class="fr">Martelé cloche cloche</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A hammered dome cloche with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un martelé cloche cloche à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">60</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/lidded-spice-dishes-004.jpg" alt="Lidded Spice Dishes"><img class="" loading="lazy" src="images/small-covered-dishes-005.jpg" alt="Lidded Spice Dishes"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Lidded Spice Dishes</span><span class="fr">Couvert à épices coupelles</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A lidded spice dishes with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un couvert à épices coupelles à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">61</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Covered Dishes &amp; Tureens</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/oval-covered-tureen-071.jpg" alt="Oval Covered Tureen"><img class="" loading="lazy" src="images/oval-covered-tureen-072.jpg" alt="Oval Covered Tureen"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Oval Covered Tureen</span><span class="fr">Ovale couvert soupière</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A oval covered tureen with fitted lid in fine silver-plate, finished by hand in Fes.</span><span class="fr">Un ovale couvert soupière à couvercle en métal argenté, fini à la main à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">62</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">04</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Tiered Stands</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Raised and tiered presentation pieces for pastries, fruit and the centre of the table.</p>
+  <div class="dv-count">6 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tiered Stands</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/pedestal-cake-stand-062.jpg" alt="Pedestal Cake Stand"><img class="" loading="lazy" src="images/cake-stand-063.jpg" alt="Pedestal Cake Stand"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pedestal Cake Stand</span><span class="fr">Sur pied à gâteau présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pedestal cake stand for pastries and fruit, in hand-finished silver-plate from Fes.</span><span class="fr">Un sur pied à gâteau présentoir pour pâtisseries et fruits, en métal argenté fini à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">64</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tiered Stands</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/three-tier-dessert-stand-039.jpg" alt="Three-Tier Dessert Stand"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Three-Tier Dessert Stand</span><span class="fr">À trois étages à dessert présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A three-tier dessert stand for pastries and fruit, in hand-finished silver-plate from Fes.</span><span class="fr">Un à trois étages à dessert présentoir pour pâtisseries et fruits, en métal argenté fini à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">65</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tiered Stands</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/two-tier-octagon-stand-076.jpg" alt="Two-Tier Octagon Stand"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Two-Tier Octagon Stand</span><span class="fr">À deux étages octogonal présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A two-tier octagon stand for pastries and fruit, in hand-finished silver-plate from Fes.</span><span class="fr">Un à deux étages octogonal présentoir pour pâtisseries et fruits, en métal argenté fini à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">66</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tiered Stands</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/two-tier-pierced-stand-077.jpg" alt="Two-Tier Pierced Stand"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Two-Tier Pierced Stand</span><span class="fr">À deux étages ajouré présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A two-tier pierced stand for pastries and fruit, in hand-finished silver-plate from Fes.</span><span class="fr">Un à deux étages ajouré présentoir pour pâtisseries et fruits, en métal argenté fini à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">67</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tiered Stands</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/two-tier-serving-stand-000.jpg" alt="Two-Tier Serving Stand"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Two-Tier Serving Stand</span><span class="fr">À deux étages de service présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A two-tier serving stand for pastries and fruit, in hand-finished silver-plate from Fes.</span><span class="fr">Un à deux étages de service présentoir pour pâtisseries et fruits, en métal argenté fini à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">68</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tiered Stands</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/two-tier-stand-040.jpg" alt="Two-Tier Stand"><img class="" loading="lazy" src="images/two-tier-stand-041.jpg" alt="Two-Tier Stand"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Two-Tier Stand</span><span class="fr">À deux étages présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A two-tier stand for pastries and fruit, in hand-finished silver-plate from Fes.</span><span class="fr">Un à deux étages présentoir pour pâtisseries et fruits, en métal argenté fini à Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">69</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">05</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Tea &amp; Coffee Service</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Teapots, coffee pots, sugar bowls and creamers — the house service, chased and finished by hand.</p>
+  <div class="dv-count">12 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/classic-teapot-033.jpg" alt="Classic Teapot"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Classic Teapot</span><span class="fr">Classique théière</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A classic teapot from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un classique théière du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">71</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/classic-teapot-104.jpg" alt="Classic Teapot"><img class="" loading="lazy" src="images/creamer-105.jpg" alt="Classic Teapot"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Classic Teapot</span><span class="fr">Classique théière</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A classic teapot from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un classique théière du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">72</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/covered-sugar-bowl-095.jpg" alt="Covered Sugar Bowl"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Covered Sugar Bowl</span><span class="fr">Couvert sucrier coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A covered sugar bowl from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un couvert sucrier coupe du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">73</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/covered-sugar-bowl-100.jpg" alt="Covered Sugar Bowl"><img class="" loading="lazy" src="images/sugar-bowl-101.jpg" alt="Covered Sugar Bowl"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Covered Sugar Bowl</span><span class="fr">Couvert sucrier coupe</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A covered sugar bowl from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un couvert sucrier coupe du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">74</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="big" loading="lazy" src="images/cream-sugar-set-108.jpg" alt="Cream &amp;amp; Sugar Set"><img class="" loading="lazy" src="images/cream-sugar-set-109.jpg" alt="Cream &amp;amp; Sugar Set"><img class="" loading="lazy" src="images/cream-sugar-set-110.jpg" alt="Cream &amp;amp; Sugar Set"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Cream &amp; Sugar Set</span><span class="fr">Crémier et sucrier set</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A cream &amp; sugar set from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un crémier et sucrier set du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>3 photographs</i></div></div>
+  </div>
+  <div class="l-foot">75</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/creamer-090.jpg" alt="Creamer"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Creamer</span><span class="fr">Crémier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A creamer from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un crémier du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">76</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/footed-goblet-set-002.jpg" alt="Footed Goblet Set"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Footed Goblet Set</span><span class="fr">Sur pied gobelet set</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A footed goblet set from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un sur pied gobelet set du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">77</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/petite-teapot-creamer-024.jpg" alt="Petite Teapot &amp;amp; Creamer"><img class="" loading="lazy" src="images/petite-teapot-creamer-025.jpg" alt="Petite Teapot &amp;amp; Creamer"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Petite Teapot &amp; Creamer</span><span class="fr">Petite théière et crémier</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A petite teapot &amp; creamer from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un petite théière et crémier du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">78</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/silver-coffee-pot-026.jpg" alt="Silver Coffee Pot"><img class="" loading="lazy" src="images/silver-coffee-pot-027.jpg" alt="Silver Coffee Pot"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Silver Coffee Pot</span><span class="fr">Argenté à café pot</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A silver coffee pot from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un argenté à café pot du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">79</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/silver-pitcher-088.jpg" alt="Silver Pitcher"><img class="" loading="lazy" src="images/water-pitcher-089.jpg" alt="Silver Pitcher"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Silver Pitcher</span><span class="fr">Argenté pichet</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A silver pitcher from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un argenté pichet du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">80</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/silver-teapot-023.jpg" alt="Silver Teapot"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Silver Teapot</span><span class="fr">Argenté théière</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A silver teapot from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un argenté théière du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">81</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Tea &amp; Coffee Service</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="big" loading="lazy" src="images/tea-coffee-service-096.jpg" alt="Tea &amp;amp; Coffee Service"><img class="" loading="lazy" src="images/tea-coffee-service-097.jpg" alt="Tea &amp;amp; Coffee Service"><img class="" loading="lazy" src="images/tea-coffee-service-098.jpg" alt="Tea &amp;amp; Coffee Service"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Tea &amp; Coffee Service</span><span class="fr">À thé et à café Service</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A tea &amp; coffee service from the Taklidy tea and coffee service, in fine silver-plate.</span><span class="fr">Un à thé et à café service du service à thé et café Taklidy, en métal argenté.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div><div class="sp"><b>Views</b><i>3 photographs</i></div></div>
+  </div>
+  <div class="l-foot">82</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">06</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Wine &amp; Ice</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Ice buckets, bottle stands and coolers for the table and cellar.</p>
+  <div class="dv-count">7 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/geometric-canister-038.jpg" alt="Geometric Canister"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Geometric Canister</span><span class="fr">Géométrique boîte</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A geometric canister for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un géométrique boîte pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">84</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/hammered-tumbler-vase-037.jpg" alt="Hammered Tumbler Vase"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Hammered Tumbler Vase</span><span class="fr">Martelé gobelet vase</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A hammered tumbler vase for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un martelé gobelet vase pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">85</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/ice-bucket-099.jpg" alt="Ice Bucket"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Ice Bucket</span><span class="fr">À glace seau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A ice bucket for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un à glace seau pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">86</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-canister-106.jpg" alt="Pierced Canister"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Canister</span><span class="fr">Ajouré boîte</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced canister for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un ajouré boîte pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">87</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/pierced-footed-cooler-107.jpg" alt="Pierced Footed Cooler"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Pierced Footed Cooler</span><span class="fr">Ajouré sur pied rafraîchissoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A pierced footed cooler for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un ajouré sur pied rafraîchissoir pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">88</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/warmer-stand-102.jpg" alt="Warmer Stand"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Warmer Stand</span><span class="fr">Réchaud présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A warmer stand for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un réchaud présentoir pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">89</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Wine &amp; Ice</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/wine-bottle-stand-103.jpg" alt="Wine Bottle Stand"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Wine Bottle Stand</span><span class="fr">À vin porte-bouteille présentoir</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A wine bottle stand for the table and cellar, in hand-finished silver-plate.</span><span class="fr">Un à vin porte-bouteille présentoir pour la table et la cave, en métal argenté fini à la main.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Silver-plate</i></div><div class="sp"><b>Finish</b><i>Polished silver</i></div></div>
+  </div>
+  <div class="l-foot">90</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">07</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">Glassware</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">Pressed-crystal trays and dishes, paired with the house silver-plate.</p>
+  <div class="dv-count">4 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Glassware</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/glass-serving-tray-118.jpg" alt="Glass Serving Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Glass Serving Tray</span><span class="fr">Verre de service plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A glass serving tray in pressed crystal, paired with the house silver-plate service.</span><span class="fr">Un verre de service plateau en cristal pressé, assorti au service en métal argenté de la maison.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Pressed glass</i></div><div class="sp"><b>Finish</b><i>Clear crystal</i></div></div>
+  </div>
+  <div class="l-foot">92</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Glassware</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/octagonal-glass-platter-120.jpg" alt="Octagonal Glass Platter"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Octagonal Glass Platter</span><span class="fr">Octogonal verre plat</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A octagonal glass platter in pressed crystal, paired with the house silver-plate service.</span><span class="fr">Un octogonal verre plat en cristal pressé, assorti au service en métal argenté de la maison.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Pressed glass</i></div><div class="sp"><b>Finish</b><i>Clear crystal</i></div></div>
+  </div>
+  <div class="l-foot">93</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Glassware</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/octagonal-glass-tray-117.jpg" alt="Octagonal Glass Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Octagonal Glass Tray</span><span class="fr">Octogonal verre plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A octagonal glass tray in pressed crystal, paired with the house silver-plate service.</span><span class="fr">Un octogonal verre plateau en cristal pressé, assorti au service en métal argenté de la maison.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Pressed glass</i></div><div class="sp"><b>Finish</b><i>Clear crystal</i></div></div>
+  </div>
+  <div class="l-foot">94</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">Glassware</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/ribbed-glass-tray-119.jpg" alt="Ribbed Glass Tray"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Ribbed Glass Tray</span><span class="fr">Strié verre plateau</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">A ribbed glass tray in pressed crystal, paired with the house silver-plate service.</span><span class="fr">Un strié verre plateau en cristal pressé, assorti au service en métal argenté de la maison.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Pressed glass</i></div><div class="sp"><b>Finish</b><i>Clear crystal</i></div></div>
+  </div>
+  <div class="l-foot">95</div>
+</div>
+<div class="page leaf divider">
+  <div class="dv-num">08</div>
+  <div class="dv-kicker">The Collection</div>
+  <h2 class="dv-title">The House</h2>
+  <div class="dv-rule"><span>&#10070;</span></div>
+  <p class="dv-blurb">The Taklidy monogram, pouches and table linens that dress the collection.</p>
+  <div class="dv-count">6 pieces</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">The House</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/embroidered-linen-114.jpg" alt="Embroidered Linen"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Embroidered Linen</span><span class="fr">Brodé linge</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">embroidered linen — the monogram and table linens of the house of Taklidy, Fes.</span><span class="fr">brodé linge — le monogramme et le linge de table de la maison Taklidy, Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Cotton &amp; velvet</i></div><div class="sp"><b>Finish</b><i>Ivory &amp; navy</i></div></div>
+  </div>
+  <div class="l-foot">97</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">The House</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/embroidered-napkin-113.jpg" alt="Embroidered Napkin"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Embroidered Napkin</span><span class="fr">Brodé serviette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">embroidered napkin — the monogram and table linens of the house of Taklidy, Fes.</span><span class="fr">brodé serviette — le monogramme et le linge de table de la maison Taklidy, Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Cotton &amp; velvet</i></div><div class="sp"><b>Finish</b><i>Ivory &amp; navy</i></div></div>
+  </div>
+  <div class="l-foot">98</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">The House</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/lace-napkin-112.jpg" alt="Lace Napkin"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Lace Napkin</span><span class="fr">En dentelle serviette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">lace napkin — the monogram and table linens of the house of Taklidy, Fes.</span><span class="fr">en dentelle serviette — le monogramme et le linge de table de la maison Taklidy, Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Cotton &amp; velvet</i></div><div class="sp"><b>Finish</b><i>Ivory &amp; navy</i></div></div>
+  </div>
+  <div class="l-foot">99</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">The House</div>
+  <div class="l-media"><figure class="lframe"><img loading="lazy" src="images/napkin-ring-111.jpg" alt="Napkin &amp;amp; Ring"></figure></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Napkin &amp; Ring</span><span class="fr">Serviette et rond de serviette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">napkin &amp; ring — the monogram and table linens of the house of Taklidy, Fes.</span><span class="fr">serviette et rond de serviette — le monogramme et le linge de table de la maison Taklidy, Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Cotton &amp; velvet</i></div><div class="sp"><b>Finish</b><i>Ivory &amp; navy</i></div></div>
+  </div>
+  <div class="l-foot">100</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">The House</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="" loading="lazy" src="images/taklidy-linen-115.jpg" alt="Taklidy Linen"><img class="" loading="lazy" src="images/taklidy-linen-116.jpg" alt="Taklidy Linen"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Taklidy Linen</span><span class="fr">Taklidy linge</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">taklidy linen — the monogram and table linens of the house of Taklidy, Fes.</span><span class="fr">taklidy linge — le monogramme et le linge de table de la maison Taklidy, Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Cotton &amp; velvet</i></div><div class="sp"><b>Finish</b><i>Ivory &amp; navy</i></div><div class="sp"><b>Views</b><i>2 photographs</i></div></div>
+  </div>
+  <div class="l-foot">101</div>
+</div>
+<div class="page leaf">
+  <div class="l-rh">The House</div>
+  <div class="l-media"><div class="lgrid" style="--cols:2"><img class="big" loading="lazy" src="images/taklidy-pouch-092.jpg" alt="Taklidy Pouch"><img class="" loading="lazy" src="images/taklidy-pouch-093.jpg" alt="Taklidy Pouch"><img class="" loading="lazy" src="images/taklidy-pouch-094.jpg" alt="Taklidy Pouch"></div></div>
+  <div class="l-body">
+    <h2 class="l-title"><span class="en">Taklidy Pouch</span><span class="fr">Taklidy pochette</span></h2>
+    <div class="l-fl">&#10070;</div>
+    <p class="l-desc"><span class="en">taklidy pouch — the monogram and table linens of the house of Taklidy, Fes.</span><span class="fr">taklidy pochette — le monogramme et le linge de table de la maison Taklidy, Fès.</span></p>
+    <div class="l-specs"><div class="sp"><b>Material</b><i>Cotton &amp; velvet</i></div><div class="sp"><b>Finish</b><i>Ivory &amp; navy</i></div><div class="sp"><b>Views</b><i>3 photographs</i></div></div>
+  </div>
+  <div class="l-foot">102</div>
+</div>
+<div class="page hard back" data-density="hard">
+  <img class="logo" src="logo.png" alt="Taklidy monogram">
+  <div class="b-word">TAKLIDY</div>
+  <div class="b-tag">Crafted in Fes · MMXXVI</div>
+</div>
+</div></div>
+
+<footer class="ctl">
+  <button class="turn" id="prev" aria-label="Previous">&#10094;</button>
+  <span class="count" id="count">1 / 103</span>
+  <button class="turn" id="next" aria-label="Next">&#10095;</button>
+</footer>
+
+<div id="lb" onclick="this.style.display='none'"><img id="lbimg" src="" alt=""></div>
+
+<script src="js/page-flip.browser.js"></script>
+<script>
+(function(){
+  var el=document.getElementById('book');
+  var pages=el.querySelectorAll('.page');
+  function dims(){
+    var sc=document.getElementById('scene');
+    var maxH=sc.clientHeight-20, maxW=sc.clientWidth-40;
+    // two portrait leaves side by side -> total ratio width:height = (2*0.72):1
+    var ratio=0.72; // single leaf w/h
+    var h=maxH, w=h*ratio*2;
+    if(w>maxW){ w=maxW; h=w/(ratio*2); }
+    return {w:Math.floor(w/2), h:Math.floor(h)};
+  }
+  var d=dims();
+  var pf=new St.PageFlip(el, {
+    width:d.w, height:d.h, size:'stretch',
+    minWidth:240, maxWidth:760, minHeight:340, maxHeight:1060,
+    drawShadow:true, maxShadowOpacity:0.5, showCover:true,
+    flippingTime:780, usePortrait:true, mobileScrollSupport:false,
+    clickEventForward:false
+  });
+  pf.loadFromHTML(pages);
+  var count=document.getElementById('count'), jump=document.getElementById('jump');
+  var total=pf.getPageCount();
+  function upd(){
+    var p=pf.getCurrentPageIndex();
+    count.textContent=(p+1)+' / '+total;
+    jump.value=String(p);
+  }
+  pf.on('flip', upd); pf.on('init', upd);
+  document.getElementById('next').onclick=function(){ pf.flipNext(); };
+  document.getElementById('prev').onclick=function(){ pf.flipPrev(); };
+  jump.onchange=function(){ pf.flip(parseInt(this.value,10)); };
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'){ pf.flipNext(); } else if(e.key==='ArrowLeft'){ pf.flipPrev(); }
+  });
+  // language toggle (CSS-driven; no re-init needed)
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.onclick=function(){
+      document.querySelectorAll('.lang button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on'); document.body.className='lang-'+b.dataset.l;
+    };
+  });
+  // lightbox on image click
+  el.addEventListener('click',function(e){
+    var img=e.target.closest('img'); if(!img||img.classList.contains('logo')) return;
+    document.getElementById('lbimg').src=img.src; document.getElementById('lb').style.display='flex';
+  });
+  // resize -> update render size
+  var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){
+    var d2=dims(); pf.update({width:d2.w,height:d2.h}); },180); });
+  upd();
+})();
+</script>
+</body>
+</html>
