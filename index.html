@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   :root {
-    --wine:#4E7A12; --wine-2:#66981F; --gold:#84B82A; --gold-2:#B6D95C;
-    --gold-deep:#5E8A1E; --paper:#FFFFFF; --ink:#3A2A22; --muted:#8C7350; --line:#E6DAC4;
+    --wine:#2E5D43; --wine-2:#3B7254; --gold:#3C8A5E; --gold-2:#A6D9BC;
+    --gold-deep:#2E6B47; --paper:#FFFFFF; --ink:#3A2A22; --muted:#8C7350; --line:#E6DAC4;
     --serif:"Cormorant Garamond",Georgia,serif; --display:"Cinzel",Georgia,serif;
     --script:"Pinyon Script",cursive;
   }
   * { box-sizing:border-box; }
   html,body { margin:0; height:100%; }
   body { font-family:var(--serif); color:var(--ink);
-    background:radial-gradient(circle at 50% 30%, #1c3310 0, #0c1605 72%);
+    background:radial-gradient(circle at 50% 30%, #13332a 0, #081711 72%);
     display:flex; flex-direction:column; overflow:hidden; }
   body.lang-en .fr { display:none; }
   body.lang-fr .en { display:none; }
@@ -27,7 +27,7 @@
   .bar .brand { font-family:var(--display); letter-spacing:.34em; font-size:15px;
     color:var(--gold-2); }
   .bar .spacer { flex:1; }
-  .bar select { background:#20380f; color:var(--gold-2); border:1px solid var(--gold-deep);
+  .bar select { background:#1a3d2c; color:var(--gold-2); border:1px solid var(--gold-deep);
     border-radius:8px; padding:7px 12px; font-family:var(--serif); font-size:14px;
     max-width:300px; cursor:pointer; }
   .bar .lang { display:flex; border:1px solid var(--gold-deep); border-radius:8px; overflow:hidden; }
@@ -43,7 +43,7 @@
   footer.ctl { flex:0 0 auto; display:flex; align-items:center; justify-content:center;
     gap:18px; padding:12px; color:var(--gold-2); }
   .ctl button.turn { width:48px; height:48px; border-radius:50%; cursor:pointer;
-    border:1px solid var(--gold-deep); background:#20380f; color:var(--gold-2);
+    border:1px solid var(--gold-deep); background:#1a3d2c; color:var(--gold-2);
     font-size:20px; transition:background .2s,transform .15s; }
   .ctl button.turn:hover { background:var(--wine); transform:scale(1.07); }
   .ctl .count { font-family:var(--display); letter-spacing:.16em; font-size:13px; min-width:90px;
@@ -69,10 +69,10 @@
   .cover .c-tag { font-family:var(--script); font-size:clamp(20px,3.6vw,32px);
     color:var(--gold-2); margin-top:10px; }
   .cover .cyear { position:absolute; top:11%; left:0; right:0; text-align:center;
-    font-family:var(--display); font-size:11px; letter-spacing:.34em; color:#bcd49a; }
+    font-family:var(--display); font-size:11px; letter-spacing:.34em; color:#b6cfc0; }
   .cover .c-cap { position:absolute; bottom:11%; left:0; right:0; text-align:center;
     font-family:var(--display); font-size:10px; letter-spacing:.26em;
-    text-transform:uppercase; color:#bcd49a; }
+    text-transform:uppercase; color:#b6cfc0; }
   .logo { display:block; object-fit:contain; }
 
   .back { position:relative; }
@@ -81,7 +81,7 @@
     font-size:clamp(20px,4vw,34px); margin-left:.3em; }
   .back .b-tag { position:absolute; bottom:11%; left:0; right:0; text-align:center;
     font-family:var(--display); font-size:10px; letter-spacing:.26em;
-    text-transform:uppercase; color:#bcd49a; }
+    text-transform:uppercase; color:#b6cfc0; }
 
   .fore { align-items:center; justify-content:center; text-align:center; }
   .fore .logo { height:16%; margin-bottom:6px; }
@@ -98,7 +98,7 @@
   .toc ol { list-style:none; margin:0; padding:0; }
   .toc li { display:flex; align-items:baseline; gap:8px; padding:9px 0; border-bottom:1px solid var(--line); }
   .toc .t-n { font-family:var(--display); font-size:clamp(12px,1.5vw,15px); color:var(--wine); white-space:nowrap; }
-  .toc .t-d { flex:1; border-bottom:1.4px dotted #c2cca0; transform:translateY(-3px); }
+  .toc .t-d { flex:1; border-bottom:1.4px dotted #b3c7b5; transform:translateY(-3px); }
   .toc .t-c { font-style:italic; color:var(--muted); font-size:12px; }
   .toc .t-p { font-family:var(--display); color:var(--gold-deep); font-size:14px; min-width:26px; text-align:right; }
 
@@ -107,11 +107,11 @@
     color:var(--paper); align-items:center; justify-content:center; text-align:center;
     box-shadow:none; }
   .divider .dv-num { font-family:var(--display); font-size:clamp(40px,9vw,68px); color:var(--gold-deep); opacity:.6; line-height:1; }
-  .divider .dv-kicker { font-family:var(--display); letter-spacing:.4em; font-size:11px; text-transform:uppercase; color:#bcd49a; margin-top:6px; }
+  .divider .dv-kicker { font-family:var(--display); letter-spacing:.4em; font-size:11px; text-transform:uppercase; color:#b6cfc0; margin-top:6px; }
   .divider .dv-title { font-family:var(--display); font-weight:600; font-size:clamp(20px,4vw,30px); color:var(--gold-2); letter-spacing:.05em; margin:10px 0 0; }
-  .divider .dv-blurb { max-width:80%; font-style:italic; color:#d8e8bf; line-height:1.6; margin:10px auto 0; font-size:clamp(12px,1.6vw,15px); }
+  .divider .dv-blurb { max-width:80%; font-style:italic; color:#cfe2d6; line-height:1.6; margin:10px auto 0; font-size:clamp(12px,1.6vw,15px); }
   .divider .dv-count { margin-top:18px; font-family:var(--display); font-size:11px; letter-spacing:.24em;
-    text-transform:uppercase; color:#bcd49a; border:1px solid var(--gold-deep); border-radius:999px; padding:6px 16px; }
+    text-transform:uppercase; color:#b6cfc0; border:1px solid var(--gold-deep); border-radius:999px; padding:6px 16px; }
   .dv-rule { display:flex; align-items:center; justify-content:center; gap:12px; margin:14px auto; max-width:200px; color:var(--gold); }
   .dv-rule::before,.dv-rule::after { content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,var(--gold)); }
   .dv-rule::after { background:linear-gradient(90deg,var(--gold),transparent); }
@@ -145,7 +145,10 @@
   .l-foot { flex:0 0 auto; text-align:center; padding-top:8px; font-family:var(--display);
     font-size:11px; color:var(--gold-deep); }
 
-  /* apple-green hard covers + dividers carry white text */
+  /* mint-tea hard covers + dividers: botanical roots pattern + white text */
+  .hard, .divider { background-color:var(--wine);
+    background-image:url("pattern.svg"), radial-gradient(circle at 50% 30%, var(--wine-2) 0, var(--wine) 70%);
+    background-size:240px auto, cover; background-repeat:repeat, no-repeat; }
   .cover .c-word, .cover .c-tag, .back .b-word,
   .divider .dv-title, .divider .dv-rule { color:#fff; }
   .cover .cyear, .cover .c-cap, .back .b-tag,
