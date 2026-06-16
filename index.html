@@ -6,12 +6,12 @@
 <title>TAKLIDY — Catalogue</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   :root {
     --wine:#2C6300; --wine-2:#4FA300; --gold:#57B300; --gold-2:#B6F06A;
     --gold-deep:#3C7E00; --paper:#FFFFFF; --ink:#3A2A22; --muted:#8C7350; --line:#E6DAC4;
-    --serif:"Cormorant Garamond",Georgia,serif; --display:"Cinzel",Georgia,serif;
+    --serif:"Cormorant Garamond",Georgia,serif; --display:"Bodoni Moda",Didot,"Times New Roman",serif;
     --script:"Pinyon Script",cursive;
   }
   * { box-sizing:border-box; }
@@ -153,6 +153,9 @@
     background-size:120px auto; }
   .cover .c-word, .cover .c-tag, .back .b-word,
   .divider .dv-title, .divider .dv-rule { color:#111; }
+  .cover .c-word { position:relative; display:inline-block; padding-bottom:14px; }
+  .cover .c-word::after { content:""; position:absolute; left:8%; right:8%; bottom:0;
+    height:1.5px; background:#111; }
   .cover .cyear, .cover .c-cap, .back .b-tag,
   .divider .dv-kicker, .divider .dv-blurb { color:rgba(0,0,0,.72); }
   .divider .dv-num { color:rgba(0,0,0,.32); }
