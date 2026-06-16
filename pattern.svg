@@ -1,54 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="460" height="460" viewBox="0 0 460 460">
   <g>
-    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="2.4" stroke-linecap="round"/>
-    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.1"/>
-    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M280.0,110.0 Q306.5,100.8 307.0,72.8 Q280.6,82.0 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M270.0,80.0 Q259.7,57.9 235.4,60.0 Q245.7,82.1 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M356.0,70.0 Q379.7,67.1 386.6,44.3 Q363.0,47.2 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M300.0,78.0 Q312.0,61.0 300.0,44.0 Q288.0,61.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <circle cx="326" cy="16" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="388" cy="78" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="260" cy="170" r="3.2" fill="rgba(255,255,255,0.10)"/>
+    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.0" fill="none" stroke-linecap="round"/>
+    <path d="M288.0,126.0 C 322.0,134.0 342.0,158.0 380.0,152.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M236.0,218.0 C 252.0,224.0 266.0,222.0 280.0,228.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M326.0,16.0 C 342.0,10.0 348.0,22.0 338.0,30.0 C 332.0,35.0 334.0,25.0 342.0,24.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M388.0,78.0 C 400.0,80.0 402.0,90.0 394.0,94.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M280.0,110.0 Q302.3,101.5 303.5,77.6 Q281.2,86.2 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M280.0,110.0 L303.5,77.6" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M270.0,80.0 Q260.8,62.0 240.6,63.0 Q249.8,81.0 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M270.0,80.0 L240.6,63.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M356.0,70.0 Q376.1,67.5 382.0,48.1 Q362.0,50.6 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M356.0,70.0 L382.0,48.1" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M300.0,78.0 Q310.0,63.0 300.0,48.0 Q290.0,63.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M300.0,78.0 L300.0,48.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M342.0,158.0 Q359.5,162.3 370.2,147.7 Q352.7,143.5 342.0,158.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M342.0,158.0 L370.2,147.7" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M264.0,140.0 Q265.3,124.2 251.0,117.5 Q249.7,133.2 264.0,140.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M264.0,140.0 L251.0,117.5" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <circle cx="326" cy="16" r="2.6" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="388" cy="78" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="260" cy="170" r="2.2" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="380" cy="152" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="280" cy="228" r="1.8" fill="rgba(255,255,255,0.16)"/>
   </g>
   <g transform="translate(460,0) scale(-1,1)">
-    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="2.4" stroke-linecap="round"/>
-    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.1"/>
-    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M280.0,110.0 Q306.5,100.8 307.0,72.8 Q280.6,82.0 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M270.0,80.0 Q259.7,57.9 235.4,60.0 Q245.7,82.1 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M356.0,70.0 Q379.7,67.1 386.6,44.3 Q363.0,47.2 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M300.0,78.0 Q312.0,61.0 300.0,44.0 Q288.0,61.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <circle cx="326" cy="16" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="388" cy="78" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="260" cy="170" r="3.2" fill="rgba(255,255,255,0.10)"/>
+    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.0" fill="none" stroke-linecap="round"/>
+    <path d="M288.0,126.0 C 322.0,134.0 342.0,158.0 380.0,152.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M236.0,218.0 C 252.0,224.0 266.0,222.0 280.0,228.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M326.0,16.0 C 342.0,10.0 348.0,22.0 338.0,30.0 C 332.0,35.0 334.0,25.0 342.0,24.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M388.0,78.0 C 400.0,80.0 402.0,90.0 394.0,94.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M280.0,110.0 Q302.3,101.5 303.5,77.6 Q281.2,86.2 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M280.0,110.0 L303.5,77.6" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M270.0,80.0 Q260.8,62.0 240.6,63.0 Q249.8,81.0 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M270.0,80.0 L240.6,63.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M356.0,70.0 Q376.1,67.5 382.0,48.1 Q362.0,50.6 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M356.0,70.0 L382.0,48.1" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M300.0,78.0 Q310.0,63.0 300.0,48.0 Q290.0,63.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M300.0,78.0 L300.0,48.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M342.0,158.0 Q359.5,162.3 370.2,147.7 Q352.7,143.5 342.0,158.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M342.0,158.0 L370.2,147.7" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M264.0,140.0 Q265.3,124.2 251.0,117.5 Q249.7,133.2 264.0,140.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M264.0,140.0 L251.0,117.5" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <circle cx="326" cy="16" r="2.6" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="388" cy="78" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="260" cy="170" r="2.2" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="380" cy="152" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="280" cy="228" r="1.8" fill="rgba(255,255,255,0.16)"/>
   </g>
   <g transform="translate(0,460) scale(1,-1)">
-    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="2.4" stroke-linecap="round"/>
-    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.1"/>
-    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M280.0,110.0 Q306.5,100.8 307.0,72.8 Q280.6,82.0 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M270.0,80.0 Q259.7,57.9 235.4,60.0 Q245.7,82.1 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M356.0,70.0 Q379.7,67.1 386.6,44.3 Q363.0,47.2 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M300.0,78.0 Q312.0,61.0 300.0,44.0 Q288.0,61.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <circle cx="326" cy="16" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="388" cy="78" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="260" cy="170" r="3.2" fill="rgba(255,255,255,0.10)"/>
+    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.0" fill="none" stroke-linecap="round"/>
+    <path d="M288.0,126.0 C 322.0,134.0 342.0,158.0 380.0,152.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M236.0,218.0 C 252.0,224.0 266.0,222.0 280.0,228.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M326.0,16.0 C 342.0,10.0 348.0,22.0 338.0,30.0 C 332.0,35.0 334.0,25.0 342.0,24.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M388.0,78.0 C 400.0,80.0 402.0,90.0 394.0,94.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M280.0,110.0 Q302.3,101.5 303.5,77.6 Q281.2,86.2 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M280.0,110.0 L303.5,77.6" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M270.0,80.0 Q260.8,62.0 240.6,63.0 Q249.8,81.0 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M270.0,80.0 L240.6,63.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M356.0,70.0 Q376.1,67.5 382.0,48.1 Q362.0,50.6 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M356.0,70.0 L382.0,48.1" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M300.0,78.0 Q310.0,63.0 300.0,48.0 Q290.0,63.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M300.0,78.0 L300.0,48.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M342.0,158.0 Q359.5,162.3 370.2,147.7 Q352.7,143.5 342.0,158.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M342.0,158.0 L370.2,147.7" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M264.0,140.0 Q265.3,124.2 251.0,117.5 Q249.7,133.2 264.0,140.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M264.0,140.0 L251.0,117.5" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <circle cx="326" cy="16" r="2.6" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="388" cy="78" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="260" cy="170" r="2.2" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="380" cy="152" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="280" cy="228" r="1.8" fill="rgba(255,255,255,0.16)"/>
   </g>
   <g transform="translate(460,460) scale(-1,-1)">
-    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="2.4" stroke-linecap="round"/>
-    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1.1"/>
-    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" fill="none" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M280.0,110.0 Q306.5,100.8 307.0,72.8 Q280.6,82.0 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M270.0,80.0 Q259.7,57.9 235.4,60.0 Q245.7,82.1 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M356.0,70.0 Q379.7,67.1 386.6,44.3 Q363.0,47.2 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <path d="M300.0,78.0 Q312.0,61.0 300.0,44.0 Q288.0,61.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.085)" stroke-width="1"/>
-    <circle cx="326" cy="16" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="388" cy="78" r="3.2" fill="rgba(255,255,255,0.10)"/>
-    <circle cx="260" cy="170" r="3.2" fill="rgba(255,255,255,0.10)"/>
+    <path d="M230.0,230.0 C 264.0,184.0 288.0,126.0 274.0,80.0 C 264.0,46.0 288.0,24.0 326.0,16.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M274.0,80.0 C 308.0,80.0 334.0,92.0 356.0,70.0 C 370.0,56.0 380.0,62.0 388.0,78.0" stroke="rgba(255,255,255,0.16)" stroke-width="1.0" fill="none" stroke-linecap="round"/>
+    <path d="M288.0,126.0 C 322.0,134.0 342.0,158.0 380.0,152.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <path d="M230.0,230.0 C 248.0,212.0 270.0,208.0 288.0,188.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M240.0,202.0 C 256.0,200.0 264.0,186.0 260.0,170.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M236.0,218.0 C 252.0,224.0 266.0,222.0 280.0,228.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M326.0,16.0 C 342.0,10.0 348.0,22.0 338.0,30.0 C 332.0,35.0 334.0,25.0 342.0,24.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M388.0,78.0 C 400.0,80.0 402.0,90.0 394.0,94.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+    <path d="M280.0,110.0 Q302.3,101.5 303.5,77.6 Q281.2,86.2 280.0,110.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M280.0,110.0 L303.5,77.6" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M270.0,80.0 Q260.8,62.0 240.6,63.0 Q249.8,81.0 270.0,80.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M270.0,80.0 L240.6,63.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M356.0,70.0 Q376.1,67.5 382.0,48.1 Q362.0,50.6 356.0,70.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M356.0,70.0 L382.0,48.1" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M300.0,78.0 Q310.0,63.0 300.0,48.0 Q290.0,63.0 300.0,78.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M300.0,78.0 L300.0,48.0" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M342.0,158.0 Q359.5,162.3 370.2,147.7 Q352.7,143.5 342.0,158.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M342.0,158.0 L370.2,147.7" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <path d="M264.0,140.0 Q265.3,124.2 251.0,117.5 Q249.7,133.2 264.0,140.0 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.16)" stroke-width="0.7"/><path d="M264.0,140.0 L251.0,117.5" stroke="rgba(255,255,255,0.16)" stroke-width="0.5" fill="none"/>
+    <circle cx="326" cy="16" r="2.6" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="388" cy="78" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="260" cy="170" r="2.2" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="380" cy="152" r="2.4" fill="rgba(255,255,255,0.16)"/>
+    <circle cx="280" cy="228" r="1.8" fill="rgba(255,255,255,0.16)"/>
   </g>
 </svg>
