@@ -146,12 +146,14 @@
     font-size:11px; color:var(--gold-deep); }
 
   /* mint-tea hard covers + dividers: botanical roots pattern + white text */
-  .hard, .divider { background-color:var(--wine);
-    background-image:url("pattern.svg"), radial-gradient(circle at 50% 30%, var(--wine-2) 0, var(--wine) 70%);
-    background-size:120px auto, cover; background-repeat:repeat, no-repeat; }
+  .hard, .divider { background-color:#6DD100 !important;
+    background-image:url("pattern.svg"); background-size:120px auto; background-repeat:repeat; }
   .leaf:not(.divider) { background-color:var(--paper);
     background-image:url("pattern-green.svg"); background-repeat:repeat;
     background-size:120px auto; }
+  .cover .c-word, .cover .c-tag, .back .b-word, .cover .cyear, .cover .c-cap,
+  .back .b-tag, .divider .dv-title, .divider .dv-kicker, .divider .dv-blurb,
+  .divider .dv-num, .divider .dv-count, .divider .dv-rule { text-shadow:0 1px 3px rgba(0,0,0,.32); }
   .cover .c-word, .cover .c-tag, .back .b-word,
   .divider .dv-title, .divider .dv-rule { color:#fff; }
   .cover .cyear, .cover .c-cap, .back .b-tag,
