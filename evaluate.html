@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taklidy — Catalogue Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#777; --line:#e6e6e6; --paper:#fff;
+    --keep:#2e9e4f; --keep-bg:#e8f6ec; --remove:#d9342b; --remove-bg:#fcebea;
+    --display:"Bodoni Moda",Didot,"Times New Roman",serif;
+    --serif:"Cormorant Garamond",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#f4f4f2;color:var(--ink);
+    font-family:var(--serif);font-size:18px;-webkit-font-smoothing:antialiased;
+    padding-bottom:120px}
+  header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line);
+    padding:18px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    box-shadow:0 2px 10px rgba(0,0,0,.04)}
+  header h1{font-family:var(--display);font-weight:700;letter-spacing:.28em;
+    font-size:26px;margin:0 0 0 .28em}
+  header .sub{color:var(--muted);font-size:15px}
+  .stats{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .pill{font-size:14px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);
+    background:#fafafa;white-space:nowrap}
+  .pill b{font-family:var(--display)}
+  .pill.k{color:var(--keep);border-color:#bfe3c9;background:var(--keep-bg)}
+  .pill.r{color:var(--remove);border-color:#f1c4c1;background:var(--remove-bg)}
+  .intro{max-width:900px;margin:24px auto 6px;padding:0 22px;color:#444;line-height:1.5}
+  .grid{max-width:1280px;margin:18px auto 0;padding:0 22px;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:26px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    display:flex;flex-direction:column;transition:.18s;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+  .card.removed{opacity:.62;border-color:#f1c4c1}
+  .card.removed .ph{filter:grayscale(.7)}
+  .card.kept{border-color:#bfe3c9}
+  .ph{position:relative;aspect-ratio:4/3;background:#f0efed;cursor:zoom-in}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .tag{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.62);color:#fff;
+    font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+  .stamp{position:absolute;top:10px;right:10px;font-family:var(--display);font-weight:700;
+    font-size:13px;letter-spacing:.12em;padding:5px 12px;border-radius:6px;display:none}
+  .card.removed .stamp{display:block;background:var(--remove);color:#fff}
+  .card.kept .stamp{display:block;background:var(--keep);color:#fff;content:"KEEP"}
+  .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .ttl{font-family:var(--display);font-size:21px;line-height:1.15}
+  .sec{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-top:-6px}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{appearance:none;border:2px solid var(--line);background:#fff;border-radius:11px;
+    padding:14px 8px;font-family:var(--serif);font-size:19px;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:8px;transition:.12s;color:#555}
+  .btn .ic{font-size:22px;line-height:1}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.keep.on{background:var(--keep-bg);border-color:var(--keep);color:var(--keep)}
+  .btn.remove.on{background:var(--remove-bg);border-color:var(--remove);color:var(--remove)}
+  .cmt{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;
+    font-family:var(--serif);font-size:16px;resize:vertical;min-height:46px;background:#fcfcfb}
+  .cmt:focus{outline:none;border-color:#bbb;background:#fff}
+  .cmt::placeholder{color:#aab}
+  /* share bar */
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;
+    border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(0,0,0,.07);
+    padding:14px 22px;display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .bar .summary{font-size:15px;color:#444}
+  .share{appearance:none;border:0;cursor:pointer;background:#25D366;color:#fff;
+    font-family:var(--display);font-weight:700;letter-spacing:.08em;font-size:21px;
+    padding:16px 34px;border-radius:14px;display:flex;align-items:center;gap:12px;
+    box-shadow:0 6px 18px rgba(37,211,102,.4);transition:.14s}
+  .share:hover{transform:translateY(-2px);box-shadow:0 9px 24px rgba(37,211,102,.5)}
+  .share svg{width:26px;height:26px;fill:#fff}
+  .ghost{appearance:none;border:1px solid var(--line);background:#fff;cursor:pointer;
+    font-family:var(--serif);font-size:15px;padding:13px 18px;border-radius:11px;color:#555}
+  .ghost:hover{background:#fafafa}
+  /* lightbox */
+  .lb{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:80;display:none;
+    align-items:center;justify-content:center;cursor:zoom-out}
+  .lb.open{display:flex}
+  .lb img{max-width:94vw;max-height:94vh;border-radius:8px}
+  /* toast */
+  .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#1a1a1a;color:#fff;padding:13px 22px;border-radius:10px;font-size:15px;
+    opacity:0;pointer-events:none;transition:.25s;z-index:90}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:520px){
+    header h1{font-size:21px}
+    .grid{grid-template-columns:1fr;gap:18px}
+    .share{font-size:18px;padding:14px 22px;width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>TAKLIDY</h1>
+  <span class="sub">Catalogue&nbsp;Review</span>
+  <div class="stats">
+    <span class="pill">Total <b id="nTotal">0</b></span>
+    <span class="pill k">Keep <b id="nKeep">0</b></span>
+    <span class="pill r">Remove <b id="nRemove">0</b></span>
+    <span class="pill" id="nComm" style="display:none">Notes <b>0</b></span>
+  </div>
+</header>
+
+<p class="intro">Tap <b>Remove</b> on any photo that should be cut, or leave it as
+<b>Keep</b>. Add a note where you want a change (wrong name, reshoot, crop…). Your
+choices are saved automatically. When done, hit <b>Share to Jad</b> — it sends the
+list straight to WhatsApp.</p>
+
+<div class="grid" id="grid"></div>
+
+<div class="bar">
+  <span class="summary" id="barSum">All kept so far.</span>
+  <button class="ghost" id="resetBtn">Reset all</button>
+  <button class="ghost" id="copyBtn">Copy summary</button>
+  <button class="share" id="shareBtn">
+    <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    Share to Jad
+  </button>
+</div>
+
+<div class="lb" id="lb"><img id="lbImg" alt=""></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const PHOTOS = [{"id": "two-tier-serving-stand-000.jpg", "img": "images/two-tier-serving-stand-000.jpg", "title": "Two-Tier Serving Stand", "section": "Tiered Stands", "product": 24, "shots": 1}, {"id": "footed-dome-server-001.jpg", "img": "images/footed-dome-server-001.jpg", "title": "Footed Dome Server", "section": "Covered Dishes & Tureens", "product": 25, "shots": 1}, {"id": "footed-goblet-set-002.jpg", "img": "images/footed-goblet-set-002.jpg", "title": "Footed Goblet Set", "section": "Tea & Coffee Service", "product": 26, "shots": 1}, {"id": "scalloped-footed-bowl-003.jpg", "img": "images/scalloped-footed-bowl-003.jpg", "title": "Scalloped Footed Bowl", "section": "Bowls, Baskets & Compotes", "product": 27, "shots": 1}, {"id": "lidded-spice-dishes-004.jpg", "img": "images/lidded-spice-dishes-004.jpg", "title": "Lidded Spice Dishes", "section": "Covered Dishes & Tureens", "product": 0, "shots": 2}, {"id": "small-covered-dishes-005.jpg", "img": "images/small-covered-dishes-005.jpg", "title": "Small Covered Dishes", "section": "Covered Dishes & Tureens", "product": 0, "shots": 2}, {"id": "footed-compote-006.jpg", "img": "images/footed-compote-006.jpg", "title": "Footed Compote", "section": "Bowls, Baskets & Compotes", "product": 28, "shots": 1}, {"id": "handled-oval-bowl-007.jpg", "img": "images/handled-oval-bowl-007.jpg", "title": "Handled Oval Bowl", "section": "Bowls, Baskets & Compotes", "product": 29, "shots": 1}, {"id": "rectangular-handled-tray-008.jpg", "img": "images/rectangular-handled-tray-008.jpg", "title": "Rectangular Handled Tray", "section": "Trays & Platters", "product": 30, "shots": 1}, {"id": "embossed-serving-tray-009.jpg", "img": "images/embossed-serving-tray-009.jpg", "title": "Embossed Serving Tray", "section": "Trays & Platters", "product": 31, "shots": 1}, {"id": "rectangular-serving-tray-010.jpg", "img": "images/rectangular-serving-tray-010.jpg", "title": "Rectangular Serving Tray", "section": "Trays & Platters", "product": 32, "shots": 1}, {"id": "round-charger-plate-011.jpg", "img": "images/round-charger-plate-011.jpg", "title": "Round Charger Plate", "section": "Trays & Platters", "product": 33, "shots": 1}, {"id": "engraved-round-tray-012.jpg", "img": "images/engraved-round-tray-012.jpg", "title": "Engraved Round Tray", "section": "Trays & Platters", "product": 34, "shots": 1}, {"id": "square-nesting-dishes-013.jpg", "img": "images/square-nesting-dishes-013.jpg", "title": "Square Nesting Dishes", "section": "Trays & Platters", "product": 35, "shots": 1}, {"id": "oval-serving-platter-014.jpg", "img": "images/oval-serving-platter-014.jpg", "title": "Oval Serving Platter", "section": "Trays & Platters", "product": 36, "shots": 1}, {"id": "rectangular-tray-015.jpg", "img": "images/rectangular-tray-015.jpg", "title": "Rectangular Tray", "section": "Trays & Platters", "product": 37, "shots": 1}, {"id": "rectangular-tray-pair-016.jpg", "img": "images/rectangular-tray-pair-016.jpg", "title": "Rectangular Tray Pair", "section": "Trays & Platters", "product": 1, "shots": 2}, {"id": "rectangular-tray-pair-017.jpg", "img": "images/rectangular-tray-pair-017.jpg", "title": "Rectangular Tray Pair", "section": "Trays & Platters", "product": 1, "shots": 2}, {"id": "hammered-dome-cloche-018.jpg", "img": "images/hammered-dome-cloche-018.jpg", "title": "Hammered Dome Cloche", "section": "Covered Dishes & Tureens", "product": 38, "shots": 1}, {"id": "pierced-oval-basket-019.jpg", "img": "images/pierced-oval-basket-019.jpg", "title": "Pierced Oval Basket", "section": "Bowls, Baskets & Compotes", "product": 39, "shots": 1}, {"id": "pierced-bonbon-basket-020.jpg", "img": "images/pierced-bonbon-basket-020.jpg", "title": "Pierced Bonbon Basket", "section": "Bowls, Baskets & Compotes", "product": 40, "shots": 1}, {"id": "pierced-bread-basket-021.jpg", "img": "images/pierced-bread-basket-021.jpg", "title": "Pierced Bread Basket", "section": "Bowls, Baskets & Compotes", "product": 41, "shots": 1}, {"id": "pedestal-compote-022.jpg", "img": "images/pedestal-compote-022.jpg", "title": "Pedestal Compote", "section": "Bowls, Baskets & Compotes", "product": 42, "shots": 1}, {"id": "silver-teapot-023.jpg", "img": "images/silver-teapot-023.jpg", "title": "Silver Teapot", "section": "Tea & Coffee Service", "product": 43, "shots": 1}, {"id": "petite-teapot-creamer-024.jpg", "img": "images/petite-teapot-creamer-024.jpg", "title": "Petite Teapot & Creamer", "section": "Tea & Coffee Service", "product": 2, "shots": 2}, {"id": "petite-teapot-creamer-025.jpg", "img": "images/petite-teapot-creamer-025.jpg", "title": "Petite Teapot & Creamer", "section": "Tea & Coffee Service", "product": 2, "shots": 2}, {"id": "silver-coffee-pot-026.jpg", "img": "images/silver-coffee-pot-026.jpg", "title": "Silver Coffee Pot", "section": "Tea & Coffee Service", "product": 3, "shots": 2}, {"id": "silver-coffee-pot-027.jpg", "img": "images/silver-coffee-pot-027.jpg", "title": "Silver Coffee Pot", "section": "Tea & Coffee Service", "product": 3, "shots": 2}, {"id": "footed-soup-tureen-028.jpg", "img": "images/footed-soup-tureen-028.jpg", "title": "Footed Soup Tureen", "section": "Covered Dishes & Tureens", "product": 44, "shots": 1}, {"id": "hammered-serving-bowl-029.jpg", "img": "images/hammered-serving-bowl-029.jpg", "title": "Hammered Serving Bowl", "section": "Bowls, Baskets & Compotes", "product": 45, "shots": 1}, {"id": "footed-oval-server-030.jpg", "img": "images/footed-oval-server-030.jpg", "title": "Footed Oval Server", "section": "Bowls, Baskets & Compotes", "product": 4, "shots": 2}, {"id": "handled-footed-dish-031.jpg", "img": "images/handled-footed-dish-031.jpg", "title": "Handled Footed Dish", "section": "Bowls, Baskets & Compotes", "product": 4, "shots": 2}, {"id": "conical-covered-jar-032.jpg", "img": "images/conical-covered-jar-032.jpg", "title": "Conical Covered Jar", "section": "Covered Dishes & Tureens", "product": 46, "shots": 1}, {"id": "classic-teapot-033.jpg", "img": "images/classic-teapot-033.jpg", "title": "Classic Teapot", "section": "Tea & Coffee Service", "product": 47, "shots": 1}, {"id": "covered-entr-e-dish-034.jpg", "img": "images/covered-entr-e-dish-034.jpg", "title": "Covered Entrée Dish", "section": "Covered Dishes & Tureens", "product": 5, "shots": 3}, {"id": "covered-entr-e-dish-035.jpg", "img": "images/covered-entr-e-dish-035.jpg", "title": "Covered Entrée Dish", "section": "Covered Dishes & Tureens", "product": 5, "shots": 3}, {"id": "covered-entr-e-dish-036.jpg", "img": "images/covered-entr-e-dish-036.jpg", "title": "Covered Entrée Dish", "section": "Covered Dishes & Tureens", "product": 5, "shots": 3}, {"id": "hammered-tumbler-vase-037.jpg", "img": "images/hammered-tumbler-vase-037.jpg", "title": "Hammered Tumbler Vase", "section": "Wine & Ice", "product": 48, "shots": 1}, {"id": "geometric-canister-038.jpg", "img": "images/geometric-canister-038.jpg", "title": "Geometric Canister", "section": "Wine & Ice", "product": 49, "shots": 1}, {"id": "three-tier-dessert-stand-039.jpg", "img": "images/three-tier-dessert-stand-039.jpg", "title": "Three-Tier Dessert Stand", "section": "Tiered Stands", "product": 50, "shots": 1}, {"id": "two-tier-stand-040.jpg", "img": "images/two-tier-stand-040.jpg", "title": "Two-Tier Stand", "section": "Tiered Stands", "product": 6, "shots": 2}, {"id": "two-tier-stand-041.jpg", "img": "images/two-tier-stand-041.jpg", "title": "Two-Tier Stand", "section": "Tiered Stands", "product": 6, "shots": 2}, {"id": "gold-handled-round-tray-042.jpg", "img": "images/gold-handled-round-tray-042.jpg", "title": "Gold-Handled Round Tray", "section": "Trays & Platters", "product": 7, "shots": 2}, {"id": "gold-handled-dish-043.jpg", "img": "images/gold-handled-dish-043.jpg", "title": "Gold-Handled Dish", "section": "Trays & Platters", "product": 7, "shots": 2}, {"id": "gold-handled-covered-dish-044.jpg", "img": "images/gold-handled-covered-dish-044.jpg", "title": "Gold-Handled Covered Dish", "section": "Covered Dishes & Tureens", "product": 51, "shots": 1}, {"id": "footed-sherbet-cup-045.jpg", "img": "images/footed-sherbet-cup-045.jpg", "title": "Footed Sherbet Cup", "section": "Bowls, Baskets & Compotes", "product": 52, "shots": 1}, {"id": "pedestal-serving-bowl-046.jpg", "img": "images/pedestal-serving-bowl-046.jpg", "title": "Pedestal Serving Bowl", "section": "Bowls, Baskets & Compotes", "product": 53, "shots": 1}, {"id": "beaded-pedestal-bowl-047.jpg", "img": "images/beaded-pedestal-bowl-047.jpg", "title": "Beaded Pedestal Bowl", "section": "Bowls, Baskets & Compotes", "product": 54, "shots": 1}, {"id": "mirror-plateau-048.jpg", "img": "images/mirror-plateau-048.jpg", "title": "Mirror Plateau", "section": "Trays & Platters", "product": 55, "shots": 1}, {"id": "pierced-round-charger-049.jpg", "img": "images/pierced-round-charger-049.jpg", "title": "Pierced Round Charger", "section": "Trays & Platters", "product": 56, "shots": 1}, {"id": "oval-mirror-plateau-050.jpg", "img": "images/oval-mirror-plateau-050.jpg", "title": "Oval Mirror Plateau", "section": "Trays & Platters", "product": 8, "shots": 3}, {"id": "oval-mirror-plateau-051.jpg", "img": "images/oval-mirror-plateau-051.jpg", "title": "Oval Mirror Plateau", "section": "Trays & Platters", "product": 8, "shots": 3}, {"id": "oval-mirror-plateau-052.jpg", "img": "images/oval-mirror-plateau-052.jpg", "title": "Oval Mirror Plateau", "section": "Trays & Platters", "product": 8, "shots": 3}, {"id": "octagonal-compote-053.jpg", "img": "images/octagonal-compote-053.jpg", "title": "Octagonal Compote", "section": "Bowls, Baskets & Compotes", "product": 9, "shots": 2}, {"id": "octagonal-compote-054.jpg", "img": "images/octagonal-compote-054.jpg", "title": "Octagonal Compote", "section": "Bowls, Baskets & Compotes", "product": 9, "shots": 2}, {"id": "footed-centerpiece-bowl-055.jpg", "img": "images/footed-centerpiece-bowl-055.jpg", "title": "Footed Centerpiece Bowl", "section": "Bowls, Baskets & Compotes", "product": 57, "shots": 1}, {"id": "lion-handle-footed-bowl-056.jpg", "img": "images/lion-handle-footed-bowl-056.jpg", "title": "Lion-Handle Footed Bowl", "section": "Bowls, Baskets & Compotes", "product": 58, "shots": 1}, {"id": "deep-pedestal-bowl-057.jpg", "img": "images/deep-pedestal-bowl-057.jpg", "title": "Deep Pedestal Bowl", "section": "Bowls, Baskets & Compotes", "product": 59, "shots": 1}, {"id": "beaded-footed-bowl-058.jpg", "img": "images/beaded-footed-bowl-058.jpg", "title": "Beaded Footed Bowl", "section": "Bowls, Baskets & Compotes", "product": 60, "shots": 1}, {"id": "pierced-pedestal-compote-059.jpg", "img": "images/pierced-pedestal-compote-059.jpg", "title": "Pierced Pedestal Compote", "section": "Bowls, Baskets & Compotes", "product": 61, "shots": 1}, {"id": "pierced-compote-060.jpg", "img": "images/pierced-compote-060.jpg", "title": "Pierced Compote", "section": "Bowls, Baskets & Compotes", "product": 62, "shots": 1}, {"id": "round-plate-061.jpg", "img": "images/round-plate-061.jpg", "title": "Round Plate", "section": "Trays & Platters", "product": 63, "shots": 1}, {"id": "pedestal-cake-stand-062.jpg", "img": "images/pedestal-cake-stand-062.jpg", "title": "Pedestal Cake Stand", "section": "Tiered Stands", "product": 10, "shots": 2}, {"id": "cake-stand-063.jpg", "img": "images/cake-stand-063.jpg", "title": "Cake Stand", "section": "Tiered Stands", "product": 10, "shots": 2}, {"id": "footed-covered-jar-064.jpg", "img": "images/footed-covered-jar-064.jpg", "title": "Footed Covered Jar", "section": "Covered Dishes & Tureens", "product": 11, "shots": 2}, {"id": "tall-covered-jar-065.jpg", "img": "images/tall-covered-jar-065.jpg", "title": "Tall Covered Jar", "section": "Covered Dishes & Tureens", "product": 11, "shots": 2}, {"id": "covered-vegetable-dish-066.jpg", "img": "images/covered-vegetable-dish-066.jpg", "title": "Covered Vegetable Dish", "section": "Covered Dishes & Tureens", "product": 64, "shots": 1}, {"id": "round-handled-tray-067.jpg", "img": "images/round-handled-tray-067.jpg", "title": "Round Handled Tray", "section": "Trays & Platters", "product": 65, "shots": 1}, {"id": "covered-soup-bowl-068.jpg", "img": "images/covered-soup-bowl-068.jpg", "title": "Covered Soup Bowl", "section": "Covered Dishes & Tureens", "product": 66, "shots": 1}, {"id": "glass-bowl-with-lid-069.jpg", "img": "images/glass-bowl-with-lid-069.jpg", "title": "Glass Bowl with Lid", "section": "Covered Dishes & Tureens", "product": 12, "shots": 2}, {"id": "covered-glass-dish-070.jpg", "img": "images/covered-glass-dish-070.jpg", "title": "Covered Glass Dish", "section": "Covered Dishes & Tureens", "product": 12, "shots": 2}, {"id": "oval-covered-tureen-071.jpg", "img": "images/oval-covered-tureen-071.jpg", "title": "Oval Covered Tureen", "section": "Covered Dishes & Tureens", "product": 13, "shots": 2}, {"id": "oval-covered-tureen-072.jpg", "img": "images/oval-covered-tureen-072.jpg", "title": "Oval Covered Tureen", "section": "Covered Dishes & Tureens", "product": 13, "shots": 2}, {"id": "footed-covered-server-073.jpg", "img": "images/footed-covered-server-073.jpg", "title": "Footed Covered Server", "section": "Covered Dishes & Tureens", "product": 14, "shots": 2}, {"id": "footed-covered-server-074.jpg", "img": "images/footed-covered-server-074.jpg", "title": "Footed Covered Server", "section": "Covered Dishes & Tureens", "product": 14, "shots": 2}, {"id": "gold-rim-footed-bowl-075.jpg", "img": "images/gold-rim-footed-bowl-075.jpg", "title": "Gold-Rim Footed Bowl", "section": "Bowls, Baskets & Compotes", "product": 67, "shots": 1}, {"id": "two-tier-octagon-stand-076.jpg", "img": "images/two-tier-octagon-stand-076.jpg", "title": "Two-Tier Octagon Stand", "section": "Tiered Stands", "product": 68, "shots": 1}, {"id": "two-tier-pierced-stand-077.jpg", "img": "images/two-tier-pierced-stand-077.jpg", "title": "Two-Tier Pierced Stand", "section": "Tiered Stands", "product": 69, "shots": 1}, {"id": "oval-platter-078.jpg", "img": "images/oval-platter-078.jpg", "title": "Oval Platter", "section": "Trays & Platters", "product": 70, "shots": 1}, {"id": "round-charger-079.jpg", "img": "images/round-charger-079.jpg", "title": "Round Charger", "section": "Trays & Platters", "product": 71, "shots": 1}, {"id": "footed-bowl-080.jpg", "img": "images/footed-bowl-080.jpg", "title": "Footed Bowl", "section": "Bowls, Baskets & Compotes", "product": 72, "shots": 1}, {"id": "ornate-rectangular-tray-081.jpg", "img": "images/ornate-rectangular-tray-081.jpg", "title": "Ornate Rectangular Tray", "section": "Trays & Platters", "product": 15, "shots": 3}, {"id": "tray-corner-detail-082.jpg", "img": "images/tray-corner-detail-082.jpg", "title": "Tray Corner Detail", "section": "Detail Studies", "product": 15, "shots": 3}, {"id": "tray-edge-detail-083.jpg", "img": "images/tray-edge-detail-083.jpg", "title": "Tray Edge Detail", "section": "Detail Studies", "product": 15, "shots": 3}, {"id": "footed-round-plate-084.jpg", "img": "images/footed-round-plate-084.jpg", "title": "Footed Round Plate", "section": "Trays & Platters", "product": 16, "shots": 2}, {"id": "footed-plate-086.jpg", "img": "images/footed-plate-086.jpg", "title": "Footed Plate", "section": "Trays & Platters", "product": 16, "shots": 2}, {"id": "footed-oval-platter-085.jpg", "img": "images/footed-oval-platter-085.jpg", "title": "Footed Oval Platter", "section": "Trays & Platters", "product": 73, "shots": 1}, {"id": "rectangular-tray-087.jpg", "img": "images/rectangular-tray-087.jpg", "title": "Rectangular Tray", "section": "Trays & Platters", "product": 74, "shots": 1}, {"id": "silver-pitcher-088.jpg", "img": "images/silver-pitcher-088.jpg", "title": "Silver Pitcher", "section": "Tea & Coffee Service", "product": 17, "shots": 2}, {"id": "water-pitcher-089.jpg", "img": "images/water-pitcher-089.jpg", "title": "Water Pitcher", "section": "Tea & Coffee Service", "product": 17, "shots": 2}, {"id": "creamer-090.jpg", "img": "images/creamer-090.jpg", "title": "Creamer", "section": "Tea & Coffee Service", "product": 75, "shots": 1}, {"id": "rounded-rectangular-tray-091.jpg", "img": "images/rounded-rectangular-tray-091.jpg", "title": "Rounded Rectangular Tray", "section": "Trays & Platters", "product": 76, "shots": 1}, {"id": "taklidy-pouch-092.jpg", "img": "images/taklidy-pouch-092.jpg", "title": "Taklidy Pouch", "section": "The House", "product": 18, "shots": 3}, {"id": "taklidy-pouch-093.jpg", "img": "images/taklidy-pouch-093.jpg", "title": "Taklidy Pouch", "section": "The House", "product": 18, "shots": 3}, {"id": "taklidy-pouch-094.jpg", "img": "images/taklidy-pouch-094.jpg", "title": "Taklidy Pouch", "section": "The House", "product": 18, "shots": 3}, {"id": "covered-sugar-bowl-095.jpg", "img": "images/covered-sugar-bowl-095.jpg", "title": "Covered Sugar Bowl", "section": "Tea & Coffee Service", "product": 77, "shots": 1}, {"id": "tea-coffee-service-096.jpg", "img": "images/tea-coffee-service-096.jpg", "title": "Tea & Coffee Service", "section": "Tea & Coffee Service", "product": 19, "shots": 3}, {"id": "tea-coffee-service-097.jpg", "img": "images/tea-coffee-service-097.jpg", "title": "Tea & Coffee Service", "section": "Tea & Coffee Service", "product": 19, "shots": 3}, {"id": "tea-coffee-service-098.jpg", "img": "images/tea-coffee-service-098.jpg", "title": "Tea & Coffee Service", "section": "Tea & Coffee Service", "product": 19, "shots": 3}, {"id": "ice-bucket-099.jpg", "img": "images/ice-bucket-099.jpg", "title": "Ice Bucket", "section": "Wine & Ice", "product": 78, "shots": 1}, {"id": "covered-sugar-bowl-100.jpg", "img": "images/covered-sugar-bowl-100.jpg", "title": "Covered Sugar Bowl", "section": "Tea & Coffee Service", "product": 20, "shots": 2}, {"id": "sugar-bowl-101.jpg", "img": "images/sugar-bowl-101.jpg", "title": "Sugar Bowl", "section": "Tea & Coffee Service", "product": 20, "shots": 2}, {"id": "warmer-stand-102.jpg", "img": "images/warmer-stand-102.jpg", "title": "Warmer Stand", "section": "Wine & Ice", "product": 79, "shots": 1}, {"id": "wine-bottle-stand-103.jpg", "img": "images/wine-bottle-stand-103.jpg", "title": "Wine Bottle Stand", "section": "Wine & Ice", "product": 80, "shots": 1}, {"id": "classic-teapot-104.jpg", "img": "images/classic-teapot-104.jpg", "title": "Classic Teapot", "section": "Tea & Coffee Service", "product": 21, "shots": 2}, {"id": "creamer-105.jpg", "img": "images/creamer-105.jpg", "title": "Creamer", "section": "Tea & Coffee Service", "product": 21, "shots": 2}, {"id": "pierced-canister-106.jpg", "img": "images/pierced-canister-106.jpg", "title": "Pierced Canister", "section": "Wine & Ice", "product": 81, "shots": 1}, {"id": "pierced-footed-cooler-107.jpg", "img": "images/pierced-footed-cooler-107.jpg", "title": "Pierced Footed Cooler", "section": "Wine & Ice", "product": 82, "shots": 1}, {"id": "cream-sugar-set-108.jpg", "img": "images/cream-sugar-set-108.jpg", "title": "Cream & Sugar Set", "section": "Tea & Coffee Service", "product": 22, "shots": 3}, {"id": "cream-sugar-set-109.jpg", "img": "images/cream-sugar-set-109.jpg", "title": "Cream & Sugar Set", "section": "Tea & Coffee Service", "product": 22, "shots": 3}, {"id": "cream-sugar-set-110.jpg", "img": "images/cream-sugar-set-110.jpg", "title": "Cream & Sugar Set", "section": "Tea & Coffee Service", "product": 22, "shots": 3}, {"id": "napkin-ring-111.jpg", "img": "images/napkin-ring-111.jpg", "title": "Napkin & Ring", "section": "The House", "product": 83, "shots": 1}, {"id": "lace-napkin-112.jpg", "img": "images/lace-napkin-112.jpg", "title": "Lace Napkin", "section": "The House", "product": 84, "shots": 1}, {"id": "embroidered-napkin-113.jpg", "img": "images/embroidered-napkin-113.jpg", "title": "Embroidered Napkin", "section": "The House", "product": 85, "shots": 1}, {"id": "embroidered-linen-114.jpg", "img": "images/embroidered-linen-114.jpg", "title": "Embroidered Linen", "section": "The House", "product": 86, "shots": 1}, {"id": "taklidy-linen-115.jpg", "img": "images/taklidy-linen-115.jpg", "title": "Taklidy Linen", "section": "The House", "product": 23, "shots": 2}, {"id": "taklidy-linen-116.jpg", "img": "images/taklidy-linen-116.jpg", "title": "Taklidy Linen", "section": "The House", "product": 23, "shots": 2}, {"id": "octagonal-glass-tray-117.jpg", "img": "images/octagonal-glass-tray-117.jpg", "title": "Octagonal Glass Tray", "section": "Glassware", "product": 87, "shots": 1}, {"id": "glass-serving-tray-118.jpg", "img": "images/glass-serving-tray-118.jpg", "title": "Glass Serving Tray", "section": "Glassware", "product": 88, "shots": 1}, {"id": "ribbed-glass-tray-119.jpg", "img": "images/ribbed-glass-tray-119.jpg", "title": "Ribbed Glass Tray", "section": "Glassware", "product": 89, "shots": 1}, {"id": "octagonal-glass-platter-120.jpg", "img": "images/octagonal-glass-platter-120.jpg", "title": "Octagonal Glass Platter", "section": "Glassware", "product": 90, "shots": 1}];
+const WA = "212670114445";
+const KEY = "taklidy_review_v1";
+let state = {};
+try{ state = JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ state={}; }
+
+const $ = s=>document.querySelector(s);
+const grid = $("#grid");
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function st(id){ return state[id] || (state[id]={removed:false,note:""}); }
+
+function card(p){
+  const s = st(p.id);
+  const el = document.createElement("div");
+  el.className = "card " + (s.removed?"removed":"kept");
+  el.dataset.id = p.id;
+  const multi = p.shots>1 ? '<span class="tag">'+p.shots+' shots · '+p.section+'</span>'
+                          : '<span class="tag">'+p.section+'</span>';
+  el.innerHTML = `
+    <div class="ph">
+      ${multi}
+      <span class="stamp">${s.removed?"REMOVE":"KEEP"}</span>
+      <img loading="lazy" src="${p.img}" alt="${p.title}">
+    </div>
+    <div class="body">
+      <div class="ttl">${p.title}</div>
+      <div class="btns">
+        <button class="btn keep ${s.removed?"":"on"}"><span class="ic">✓</span>Keep</button>
+        <button class="btn remove ${s.removed?"on":""}"><span class="ic">✕</span>Remove</button>
+      </div>
+      <textarea class="cmt" placeholder="Add a note (optional)…">${s.note||""}</textarea>
+    </div>`;
+  const keepB = el.querySelector(".keep"), remB = el.querySelector(".remove");
+  const stamp = el.querySelector(".stamp"), ta = el.querySelector(".cmt");
+  function paint(){
+    el.className = "card " + (s.removed?"removed":"kept");
+    keepB.classList.toggle("on", !s.removed);
+    remB.classList.toggle("on", s.removed);
+    stamp.textContent = s.removed?"REMOVE":"KEEP";
+  }
+  keepB.onclick = ()=>{ s.removed=false; save(); paint(); tally(); };
+  remB.onclick  = ()=>{ s.removed=true;  save(); paint(); tally(); };
+  ta.oninput = ()=>{ s.note = ta.value; save(); tally(); };
+  el.querySelector(".ph").onclick = e=>{ if(e.target.tagName!=="IMG"&&!e.target.classList.contains("ph"))return;
+    $("#lbImg").src = p.img; $("#lb").classList.add("open"); };
+  return el;
+}
+
+PHOTOS.forEach(p=>grid.appendChild(card(p)));
+$("#lb").onclick = ()=>$("#lb").classList.remove("open");
+
+function tally(){
+  const total = PHOTOS.length;
+  let rem=0, comm=0;
+  PHOTOS.forEach(p=>{ const s=state[p.id]||{}; if(s.removed)rem++; if((s.note||"").trim())comm++; });
+  $("#nTotal").textContent = total;
+  $("#nKeep").textContent = total-rem;
+  $("#nRemove").textContent = rem;
+  const nc=$("#nComm"); nc.style.display = comm?"":"none"; nc.querySelector("b").textContent=comm;
+  $("#barSum").textContent = rem||comm
+    ? `${rem} to remove · ${total-rem} keep${comm?` · ${comm} note${comm>1?"s":""}`:""}`
+    : "All kept so far.";
+}
+tally();
+
+function buildMessage(){
+  const rem=[], notes=[];
+  PHOTOS.forEach((p,i)=>{
+    const s=state[p.id]||{};
+    if(s.removed) rem.push(`• ${p.title} (${p.id})`);
+    if((s.note||"").trim()) notes.push(`• ${p.title}: ${s.note.trim()}`);
+  });
+  let m = "*TAKLIDY — Catalogue Review*\n";
+  m += `${PHOTOS.length} photos · ${rem.length} to remove · ${PHOTOS.length-rem.length} keep\n`;
+  if(rem.length){ m += `\n*REMOVE (${rem.length}):*\n` + rem.join("\n") + "\n"; }
+  if(notes.length){ m += `\n*NOTES (${notes.length}):*\n` + notes.join("\n") + "\n"; }
+  if(!rem.length && !notes.length) m += "\nEverything looks good — keep all.\n";
+  return m;
+}
+
+function toast(t){ const e=$("#toast"); e.textContent=t; e.classList.add("show");
+  setTimeout(()=>e.classList.remove("show"),2200); }
+
+$("#shareBtn").onclick = ()=>{
+  const msg = buildMessage();
+  const url = "https://wa.me/"+WA+"?text="+encodeURIComponent(msg);
+  window.open(url, "_blank");
+};
+$("#copyBtn").onclick = async ()=>{
+  try{ await navigator.clipboard.writeText(buildMessage()); toast("Summary copied"); }
+  catch(e){ toast("Copy failed — long-press to select"); }
+};
+$("#resetBtn").onclick = ()=>{
+  if(!confirm("Reset all choices and notes?")) return;
+  state={}; save();
+  grid.innerHTML=""; PHOTOS.forEach(p=>grid.appendChild(card(p))); tally();
+  toast("Reset");
+};
+</script>
+</body>
+</html>
