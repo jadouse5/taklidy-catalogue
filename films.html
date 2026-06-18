@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKLIDY — Films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#141414; --wine-2:#3A3A3A; --gold:#333333; --gold-2:#DCDCDC;
+    --gold-deep:#222222; --paper:#FFFFFF; --ink:#3A2A22; --muted:#9A9A9A; --line:#2A2A2A;
+    --serif:"Cormorant Garamond",Georgia,serif; --display:"Bodoni Moda",Didot,"Times New Roman",serif;
+    --script:"Pinyon Script",cursive;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{min-height:100%}
+  body{
+    font-family:var(--serif); color:var(--gold-2);
+    background:radial-gradient(circle at 50% 0%, #2A2A2A 0, #161616 72%) fixed;
+    line-height:1.6;
+  }
+  /* ---- top bar (mirrors the book viewer) ---- */
+  header.bar{
+    position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:14px;
+    padding:12px 22px; background:rgba(18,18,18,.86); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--gold-deep);
+  }
+  .bar .brand{ font-family:var(--display); font-weight:600; letter-spacing:.34em;
+    font-size:15px; color:var(--gold-2); text-indent:.34em; }
+  .bar .spacer{ flex:1; }
+  .bar nav{ display:flex; gap:6px; }
+  .bar nav a{
+    font-family:var(--display); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--gold-2); text-decoration:none; padding:7px 13px;
+    border:1px solid var(--gold-deep); border-radius:8px; transition:background .2s,transform .15s;
+  }
+  .bar nav a:hover{ background:var(--wine); transform:translateY(-1px); }
+  .bar nav a.on{ background:var(--wine); }
+
+  /* ---- hero ---- */
+  .hero{ text-align:center; padding:74px 22px 36px; }
+  .hero .kicker{ font-family:var(--display); letter-spacing:.4em; text-transform:uppercase;
+    font-size:11px; color:#9C9C9C; }
+  .hero h1{ font-family:var(--display); font-weight:700; letter-spacing:.16em;
+    font-size:clamp(34px,7vw,64px); color:var(--gold-2); margin:.18em 0 0 .16em; }
+  .hero .lead{ font-family:var(--script); font-size:clamp(22px,4vw,34px); color:var(--gold-2);
+    margin-top:8px; }
+  .hero .blurb{ max-width:64ch; margin:18px auto 0; font-size:clamp(15px,1.7vw,18px);
+    color:#C4C4C4; font-style:italic; }
+  .rule{ display:flex; align-items:center; justify-content:center; gap:12px;
+    margin:26px auto 0; max-width:220px; }
+  .rule::before,.rule::after{ content:""; height:1px; flex:1;
+    background:linear-gradient(90deg,transparent,#6A6A6A); }
+  .rule::after{ background:linear-gradient(90deg,#6A6A6A,transparent); }
+
+  /* ---- films ---- */
+  .films{ max-width:1060px; margin:0 auto; padding:40px 22px 80px;
+    display:grid; gap:54px; }
+  .film{ display:grid; grid-template-columns:1fr; gap:0; }
+  .film .frame{
+    position:relative; background:#000; border:1px solid var(--gold-deep);
+    box-shadow:0 24px 60px rgba(0,0,0,.55); overflow:hidden;
+  }
+  .film video{ display:block; width:100%; height:auto; background:#000; }
+  .film .no{ position:absolute; top:14px; left:16px; z-index:3;
+    font-family:var(--display); font-size:11px; letter-spacing:.3em; color:rgba(220,220,220,.85);
+    pointer-events:none; }
+  .film .cap{ padding:22px 6px 0; text-align:center; }
+  .film .cap .ck{ font-family:var(--display); letter-spacing:.32em; text-transform:uppercase;
+    font-size:10px; color:#9C9C9C; }
+  .film .cap h2{ font-family:var(--display); font-weight:600; letter-spacing:.06em;
+    font-size:clamp(22px,3.2vw,32px); color:var(--gold-2); margin:.35em 0 .1em; }
+  .film .cap p{ max-width:60ch; margin:10px auto 0; font-size:clamp(15px,1.6vw,17px);
+    color:#C4C4C4; }
+
+  footer{ text-align:center; padding:34px 22px 56px; border-top:1px solid var(--gold-deep);
+    color:#8C8C8C; }
+  footer .mark{ font-family:var(--display); font-weight:600; letter-spacing:.34em;
+    color:var(--gold-2); font-size:14px; }
+  footer .small{ font-size:13px; margin-top:8px; letter-spacing:.04em; }
+
+  @media (min-width:760px){
+    .film.alt .frame{ } /* placeholder for future side-by-side */
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="brand">TAKLIDY</span>
+  <span class="spacer"></span>
+  <nav>
+    <a href="index.html">The Book</a>
+    <a href="catalogue-fortnum.html">The Tea Bridge</a>
+    <a href="films.html" class="on">Films</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="kicker">Maison Taklidy · Crafted in Fes</div>
+  <h1>FILMS</h1>
+  <div class="lead">The collection, in motion</div>
+  <p class="blurb">Two short films from the atelier — fine silver-plate serveware caught
+    in light and gesture, the way each piece is meant to be lived with at the table.</p>
+  <div class="rule"></div>
+</section>
+
+<section class="films">
+  <article class="film">
+    <div class="frame">
+      <span class="no">FILM I</span>
+      <video controls preload="metadata" playsinline poster="">
+        <source src="taklidy-film-1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="cap">
+      <div class="ck">The Collection</div>
+      <h2>A Showcase of Silver</h2>
+      <p>Trays, tureens and tiered stands turned slowly under studio light — the chased
+        detail and mirror finish of pieces plated entirely by hand in Fes.</p>
+    </div>
+  </article>
+
+  <article class="film">
+    <div class="frame">
+      <span class="no">FILM II</span>
+      <video controls preload="metadata" playsinline poster="">
+        <source src="taklidy-film-2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="cap">
+      <div class="ck">The Ritual</div>
+      <h2>The Art of the Table</h2>
+      <p>From the teapot's pour to the cake stand's curve, the serveware set in its
+        element — where Moroccan hospitality meets the elegance of the house.</p>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <div class="mark">TAKLIDY</div>
+  <div class="small">Fine silver-plate serveware · Crafted in Fes · MMXXVI</div>
+</footer>
+</body>
+</html>
