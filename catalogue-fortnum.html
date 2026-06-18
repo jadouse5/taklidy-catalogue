@@ -229,7 +229,7 @@ body.flip .deck{width:auto;height:auto}
 @page{ size:A4 landscape; margin:0; }
 @media print{
   html,body{height:auto;overflow:visible;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .nav,.arrow,.counter{display:none!important}
+  .nav,.arrow,.counter,body>nav{display:none!important}
   .deck{position:static;width:auto;height:auto}
   .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;
          width:297mm;height:210mm;overflow:hidden;page-break-after:always;break-after:page;transition:none}
