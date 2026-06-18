@@ -21,7 +21,10 @@
   body{
     font-family:var(--serif); color:var(--gold-2); line-height:1.55;
     overflow-x:hidden;
-    background:radial-gradient(circle at 50% 18%, #2C2C2C 0, #141414 70%) fixed;
+    background:
+      radial-gradient(circle at 50% 16%, rgba(20,20,20,.55) 0, rgba(16,16,16,.82) 58%, rgba(12,12,12,.94) 100%),
+      url("bg-landing.jpg") center top / cover no-repeat fixed,
+      #141414;
     min-height:100svh; min-height:100vh;
     display:flex; flex-direction:column;
     padding:env(safe-area-inset-top) env(safe-area-inset-right)

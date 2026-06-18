@@ -17,12 +17,14 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;background:var(--vert-deep)}
-body{font-family:'Cormorant Garamond',Georgia,serif;color:var(--encre);font-weight:400}
+body{font-family:'Cormorant Garamond',Georgia,serif;color:var(--encre);font-weight:400;display:flex;align-items:center;justify-content:center}
 img{display:block;max-width:100%}
 
-.deck{position:relative;width:100%;height:100%}
-.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .7s ease, visibility .7s;overflow:hidden;display:flex;flex-direction:column}
-.slide.active{opacity:1;visibility:visible}
+.deck{position:relative;flex:0 0 auto;opacity:0;transition:opacity .45s ease}
+.deck.ready{opacity:1}
+.slide{position:relative;width:100%;height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--creme)}
+.stf__item .slide{height:100%}
+.stf__item{box-shadow:0 30px 80px -24px rgba(0,0,0,.7)}
 @media (max-width:820px){html,body{overflow:auto}}
 
 .eyebrow{font-size:.66rem;letter-spacing:.42em;text-transform:uppercase;color:var(--or);font-weight:400}
@@ -434,39 +436,55 @@ img{display:block;max-width:100%}
 <div class="counter" id="counter">01 / 07</div>
 <nav class="nav" id="dots" aria-label="Navigation du catalogue"></nav>
 
+<script src="js/page-flip.browser.js"></script>
 <script>
 (function(){
-  var slides=[].slice.call(document.querySelectorAll('.slide'));
-  var dotsWrap=document.getElementById('dots');
+  var el=document.getElementById('deck');
+  var slides=el.querySelectorAll('.slide');
   var counter=document.getElementById('counter');
-  var current=0;
-  slides.forEach(function(_,i){
+  var dotsWrap=document.getElementById('dots');
+  function dims(){
+    var maxW=Math.min(window.innerWidth-70, 1320), maxH=window.innerHeight-70;
+    var ratio=1.414, w=maxW, h=w/ratio;            // landscape page (A4-ish)
+    if(h>maxH){ h=maxH; w=h*ratio; }
+    return {w:Math.floor(w), h:Math.floor(h)};
+  }
+  var d=dims();
+  el.style.width=d.w+'px'; el.style.height=d.h+'px';
+  var pf=new St.PageFlip(el, {
+    width:d.w, height:d.h, size:'fixed',
+    drawShadow:true, maxShadowOpacity:0.5, showCover:false,
+    flippingTime:780, usePortrait:true, autoSize:false, mobileScrollSupport:false,
+    clickEventForward:false
+  });
+  pf.loadFromHTML(slides);
+  var total=pf.getPageCount();
+  for(var i=0;i<total;i++){ (function(i){
     var b=document.createElement('button');
     b.className='dot'+(i===0?' on':'');
     b.setAttribute('aria-label','Page '+(i+1));
-    b.addEventListener('click',function(){go(i)});
+    b.addEventListener('click',function(){ pf.flip(i); });
     dotsWrap.appendChild(b);
-  });
+  })(i); }
   var dots=[].slice.call(dotsWrap.children);
-  function go(i){
-    if(i<0||i>=slides.length)return;
-    slides[current].classList.remove('active');dots[current].classList.remove('on');
-    current=i;
-    slides[current].classList.add('active');dots[current].classList.add('on');
-    counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+  function upd(){
+    var p=pf.getCurrentPageIndex();
+    counter.textContent=String(p+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+    dots.forEach(function(x,j){ x.classList.toggle('on', j===p); });
   }
-  document.getElementById('next').addEventListener('click',function(){go(current+1)});
-  document.getElementById('prev').addEventListener('click',function(){go(current-1)});
+  pf.on('flip', upd); pf.on('init', upd);
+  document.getElementById('next').addEventListener('click',function(){ pf.flipNext(); });
+  document.getElementById('prev').addEventListener('click',function(){ pf.flipPrev(); });
   document.addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key===' ')go(current+1);
-    if(e.key==='ArrowLeft')go(current-1);
+    if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); pf.flipNext(); }
+    if(e.key==='ArrowLeft') pf.flipPrev();
   });
-  var touchX=null;
-  document.addEventListener('touchstart',function(e){touchX=e.touches[0].clientX},{passive:true});
-  document.addEventListener('touchend',function(e){
-    if(touchX===null)return;var dx=e.changedTouches[0].clientX-touchX;
-    if(Math.abs(dx)>60)go(current+(dx<0?1:-1));touchX=null;
-  },{passive:true});
+  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){
+    var d2=dims(); el.style.width=d2.w+'px'; el.style.height=d2.h+'px';
+    pf.update({width:d2.w, height:d2.h});
+  },180); });
+  el.classList.add('ready');
+  upd();
 })();
 </script>
 </body>
