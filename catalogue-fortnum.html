@@ -47,7 +47,7 @@ body.flip .deck{width:auto;height:auto}
 .slide.dark .leaf{opacity:.10}
 
 /* ===== plate / image frame ===== */
-.plate{position:relative;background:#fff;padding:8px;border:1px solid rgba(140,140,140,.55);box-shadow:0 18px 50px rgba(18,18,18,.22)}
+.plate{position:relative;background:transparent;padding:0;border:1px solid rgba(140,140,140,.4);box-shadow:0 18px 50px rgba(18,18,18,.28);overflow:hidden}
 .plate img{width:100%;height:100%;object-fit:cover}
 .plate .caption{position:absolute;left:8px;right:8px;bottom:8px;background:linear-gradient(to top, rgba(18,18,18,.82), rgba(18,18,18,0));color:var(--creme);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;padding:1.6rem .9rem .6rem;text-align:left}
 
@@ -100,9 +100,9 @@ body.flip .deck{width:auto;height:auto}
 
 /* ===== partnership ===== */
 .s-partner{background:var(--creme)}
-.partner-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4vw;align-items:center;margin-top:1rem}
-.partner-grid .plate{aspect-ratio:4/3.1}
-.s-partner h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(2rem,4vw,3.2rem);color:var(--vert);line-height:1.1}
+.partner-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3.4vw;align-items:center;margin-top:.8rem}
+.partner-grid .plate{aspect-ratio:4/3.1;max-height:60vh}
+.s-partner h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(1.7rem,3.2vw,2.7rem);color:var(--vert);line-height:1.12}
 .s-partner p{font-size:clamp(.84rem,1.05vw,.98rem);line-height:1.7;color:#3A3A3A;margin-top:1rem}
 .keyfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(140,140,140,.45);border:1px solid rgba(140,140,140,.45);margin-top:1.5rem}
 .keyfacts div{background:var(--creme);padding:1rem .9rem;text-align:center}
@@ -131,13 +131,13 @@ body.flip .deck{width:auto;height:auto}
 .event-item .glyph{width:30px;height:30px;border:1px solid var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--or);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem}
 .event-item h4{font-family:'Cormorant Garamond',serif;font-size:clamp(1.05rem,1.5vw,1.3rem);color:var(--or-pale);font-weight:500}
 .event-item p{font-size:clamp(.76rem,1vw,.88rem);line-height:1.55;color:rgba(246,245,242,.82);margin-top:.2rem}
-.s-event .plate{aspect-ratio:4/4.4}
+.s-event .plate{aspect-ratio:4/4.4;max-height:66vh;align-self:center}
 
 /* ===== collection ===== */
 .s-coll{background:var(--creme)}
-.coll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem 1.6rem;margin-top:1.4rem}
+.coll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem 1.3rem;margin-top:1rem}
 .prod{border:1px solid rgba(28,28,28,.16);background:#FAFAF8;display:flex;flex-direction:column;overflow:hidden}
-.prod .ph{position:relative;aspect-ratio:1/1;background:#ECECEA;overflow:hidden}
+.prod .ph{position:relative;aspect-ratio:1/0.82;background:#ECECEA;overflow:hidden}
 .prod .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
 .prod:hover .ph img{transform:scale(1.04)}
 .prod .body{padding:.85rem .95rem 1rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
@@ -181,7 +181,7 @@ body.flip .deck{width:auto;height:auto}
 .counter{position:fixed;top:1.4rem;right:1.8rem;z-index:50;font-size:.6rem;letter-spacing:.4em;color:var(--or);text-transform:uppercase}
 @media (prefers-reduced-motion:reduce){.slide{transition:none}}
 
-@media (max-width:820px){
+@media screen and (max-width:820px){
   html,body{overflow:hidden}
   /* each slide fills the screen and scrolls internally if needed — nothing cut */
   .slide{overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -236,7 +236,7 @@ body.flip .deck{width:auto;height:auto}
   .slide:last-child{page-break-after:auto}
   .pagebody{padding:13mm 18mm;max-width:none}
   .folio{padding:0 18mm;bottom:7mm}
-  .coll-grid{gap:5mm 6mm;margin-top:7mm}
+  .coll-grid{grid-template-columns:repeat(3,1fr);gap:5mm 6mm;margin-top:7mm}
   .s-coll .pagebody{justify-content:flex-start}
   .prod .ph{aspect-ratio:auto;height:52mm}
   .prod .body{padding:6px 9px 8px}
@@ -519,10 +519,10 @@ body.flip .deck{width:auto;height:auto}
     /* ---------- DESKTOP: page-flip presentation ---------- */
     document.body.classList.add('flip');
     var dims=function(){
-      var maxW=Math.min(window.innerWidth-70,1320), maxH=window.innerHeight-70;
-      var ratio=1.414, w=maxW, h=w/ratio;
-      if(h>maxH){ h=maxH; w=h*ratio; }
-      return {w:Math.floor(w), h:Math.floor(h)};
+      /* near full-viewport page (keep the screen's own ratio) so slide
+         content sized in vw/vh fits the page as designed — no cropping */
+      var w=Math.floor(window.innerWidth*0.95), h=Math.floor(window.innerHeight*0.95);
+      return {w:w, h:h};
     };
     var d=dims(); el.style.width=d.w+'px'; el.style.height=d.h+'px';
     var pf=new St.PageFlip(el,{
