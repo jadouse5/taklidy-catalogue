@@ -16,7 +16,7 @@
   --script:'Pinyon Script',cursive;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
+html,body{height:100%;max-width:100%;overflow-x:hidden}
 body{font-family:'Cormorant Garamond',Georgia,serif;color:var(--encre);font-weight:400;
   background:linear-gradient(180deg, rgba(14,14,14,.60) 0, rgba(11,11,11,.90) 100%),
              url("bg-landing.jpg") center center / cover no-repeat fixed, #121212;}
@@ -287,11 +287,11 @@ body.flip .deck{width:auto;height:auto}
 </style>
 </head>
 <body>
-<nav style="position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:8px">
+<nav style="position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:96vw">
   <a href="index.html" style="font-family:var(--display);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--or-pale);text-decoration:none;padding:6px 12px;border:1px solid rgba(140,140,140,.5);border-radius:999px;background:rgba(18,18,18,.5);backdrop-filter:blur(4px)">Home</a>
   <a href="book.html" style="font-family:var(--display);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--or-pale);text-decoration:none;padding:6px 12px;border:1px solid rgba(140,140,140,.5);border-radius:999px;background:rgba(18,18,18,.5);backdrop-filter:blur(4px)">The&nbsp;Book</a>
+  <a href="tea-bridge.html" style="font-family:var(--display);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--or-pale);text-decoration:none;padding:6px 12px;border:1px solid rgba(140,140,140,.5);border-radius:999px;background:rgba(18,18,18,.5);backdrop-filter:blur(4px)">Tea&nbsp;Bridge</a>
   <a href="films.html" style="font-family:var(--display);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--or-pale);text-decoration:none;padding:6px 12px;border:1px solid rgba(140,140,140,.5);border-radius:999px;background:rgba(18,18,18,.5);backdrop-filter:blur(4px)">Films</a>
-  <a href="TAKLIDY_Fortnum_Mason_Catalogue.pdf" download style="font-family:var(--display);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--or-pale);text-decoration:none;padding:6px 12px;border:1px solid rgba(140,140,140,.5);border-radius:999px;background:rgba(18,18,18,.5);backdrop-filter:blur(4px)">PDF</a>
 </nav>
 <div class="deck" id="deck">
 
